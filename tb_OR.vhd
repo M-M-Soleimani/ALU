@@ -51,25 +51,24 @@ BEGIN
             Equal_flag => Equal_flag
         );
 
-    -- Stimulus process
-    stim_proc: process
-    begin       
+    stim_proc: PROCESS
+    BEGIN       
         A <= "0000";
         B <= "0000";
-        wait for 10 ns;
+        WAIT FOR 10 ns;
         
         A <= "0001";
         B <= "0011";
-        wait for 10 ns;
+        WAIT FOR 10 ns;
         
         A <= "1111";
         B <= "0001";
-        wait for 10 ns;
+        WAIT FOR 10 ns;
 
         A <= "1001";
         B <= "0110";
-        wait for 10 ns;
+        WAIT FOR 10 ns;
 
         wait;
-    end process;
+    end PROCESS;
 END;

@@ -2,7 +2,7 @@ LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
 USE IEEE.NUMERIC_STD.ALL;
 
-ENTITY GENERIC_OR is
+ENTITY GENERIC_OR IS
     GENERIC (size: INTEGER := 4);
 
     PORT (
@@ -20,10 +20,13 @@ END GENERIC_OR;
 
 ARCHITECTURE Behavioral OF GENERIC_OR IS
 BEGIN 
-    process(A, B)
-    begin
+    PROCESS(A, B)
+    BEGIN
         Result <= A OR B;
-        
+    END PROCESS ;
+    
+    PROCESS(A ,B ,Result)
+    BEGIN
         Zero_flag <= '1';
         Equal_flag <= '1';
         Carry_flag <= '0';
@@ -46,6 +49,6 @@ BEGIN
             Greater_flag <= '0';
         end if;
         
-    end process;
+    END PROCESS;
 
 END Behavioral;
