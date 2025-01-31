@@ -22,7 +22,7 @@ END Right_Shift_Register ;
 ARCHITECTURE Behavior OF Right_Shift_Register IS 
     SIGNAL Reg : STD_LOGIC_VECTOR ( size - 1 DOWNTO 0 );
 BEGIN 
-    PROCESS( CLK , Reset )
+    PROCESS ( CLK , Reset )
     BEGIN
         if ( Reset = '1' ) then 
             Reg <= ( OTHERS => '0' );
@@ -42,7 +42,7 @@ BEGIN
 
         Zero_flag <= '1';
         for i in 0 to size-1 loop
-            if reg(i) = '1' then
+            if Reg(i) = '1' then
                 Zero_flag <= '0';
             end if ;
         end loop ;
@@ -50,6 +50,7 @@ BEGIN
         Carry_flag <= Reg(0) ;
         Borrow_flag <= '0'; 
         Overflow_flag <= '0'; 
+        
         if unsigned(Reg) > unsigned(A) then
             Greater_flag <= '1';
         else
