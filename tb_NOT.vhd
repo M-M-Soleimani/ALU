@@ -15,7 +15,7 @@ ARCHITECTURE Behavior OF tb_not IS
     SIGNAL Greater_flag : STD_LOGIC ;
     SIGNAL Equal_flag : STD_LOGIC ;
 BEGIN 
-    UUT : ENTITY WORK.generic_not 
+    UUT : ENTITY WORK.GENERIC_NOT 
     GENERIC MAP ( size => 4 )
     PORT MAP (
         A => A ,

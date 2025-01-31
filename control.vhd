@@ -7,369 +7,421 @@ entity Generic_Control_Unit is
         size : integer := 4
     );
     Port (
-        opcode : in  STD_LOGIC_VECTOR (3 downto 0);
-        A : in  STD_LOGIC_VECTOR (size-1 downto 0);
-        B : in  STD_LOGIC_VECTOR (size-1 downto 0);
-        result : out  STD_LOGIC_VECTOR (size-1 downto 0)
+        Opcode : IN  STD_LOGIC_VECTOR (3 DOWNTO 0);
+        A : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
+        B : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
+        result : OUT  STD_LOGIC_VECTOR (size-1 DOWNTO 0)
     );
 end Generic_Control_Unit;
 
 architecture Behavioral of Generic_Control_Unit is
 
-    component Generic_Adder is
+    COMPONENT Generic_Adder is
         Generic (
             size : integer := size
         );
         Port (
-            A              : in  STD_LOGIC_VECTOR(size-1 downto 0);
-            B              : in  STD.LOGIC_VECTOR(size-1 downto 0);
-            Cin            : in  std.logic;  
-            Sum            : out std.logic_vector(size-1 downto 0);
-            Zero_flag      : out std.logic;
-            Carry_flag     : out std.logic;
-            Borrow_flag    : out std.logic;
-            Overflow_flag  : out std.logic;
-            Greater_flag   : out std.logic;
-            Equal_flag     : out std.logic
+            A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            B              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Cin            : IN  STD_LOGIC;  
+            Sum            : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Zero_flag      : OUT STD_LOGIC;
+            Carry_flag     : OUT STD_LOGIC;
+            Borrow_flag    : OUT STD_LOGIC;
+            Overflow_flag  : OUT STD_LOGIC;
+            Greater_flag   : OUT STD_LOGIC;
+            Equal_flag     : OUT STD_LOGIC
         );
-    end component;
+    end COMPONENT;
 
-    component GENERIC_AND is
+    COMPONENT GENERIC_AND is
         Generic (
             size : integer := size
         );
         Port (
-            A              : in  STD.LOGIC_VECTOR(size-1 downto 0);
-            B              : in  STD.LOGIC_VECTOR(size-1 downto 0);
-            Result         : buffer STD.LOGIC_VECTOR(size-1 downto 0);
-            Zero_flag      : out std.logic;
-            Carry_flag     : out std.logic;
-            Borrow_flag    : out std.logic;
-            Overflow_flag  : out std.logic;
-            Greater_flag   : out std.logic;
-            Equal_flag     : out std.logic
+            A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            B              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Result         : BUFFER STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Zero_flag      : OUT STD_LOGIC;
+            Carry_flag     : OUT STD_LOGIC;
+            Borrow_flag    : OUT STD_LOGIC;
+            Overflow_flag  : OUT STD_LOGIC;
+            Greater_flag   : OUT STD_LOGIC;
+            Equal_flag     : OUT STD_LOGIC
         );
-    end component;
+    end COMPONENT;
 
-    component generic_not is
+    COMPONENT generic_not is
         Generic (
             size : integer := size
         );
         Port (
-            A              : in  STD.LOGIC_VECTOR(size-1 downto 0);
-            Result         : buffer STD.LOGIC_VECTOR(size-1 downto 0);
-            Zero_flag      : out std.logic;
-            Carry_flag     : out std.logic;
-            Borrow_flag    : out std.logic;
-            Overflow_flag  : out std.logic;
-            Greater_flag   : out std.logic;
-            Equal_flag     : out std.logic
+            A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Result         : BUFFER STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Zero_flag      : OUT STD_LOGIC;
+            Carry_flag     : OUT STD_LOGIC;
+            Borrow_flag    : OUT STD_LOGIC;
+            Overflow_flag  : OUT STD_LOGIC;
+            Greater_flag   : OUT STD_LOGIC;
+            Equal_flag     : OUT STD_LOGIC
         );
-    end component;
+    end COMPONENT;
 
-    component GENERIC_OR is
+    COMPONENT GENERIC_OR is
         Generic (
             size : integer := size
         );
         Port (
-            A              : in  STD.LOGIC_VECTOR(size-1 downto 0);
-            B              : in  STD.LOGIC_VECTOR(size-1 downto 0);
-            Result         : buffer STD.LOGIC_VECTOR(size-1 downto 0);
-            Zero_flag      : out std.logic;
-            Carry_flag     : out std.logic;
-            Borrow_flag    : out std.logic;
-            Overflow_flag  : out std.logic;
-            Greater_flag   : out std.logic;
-            Equal_flag     : out std.logic
+            A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            B              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Result         : BUFFER STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Zero_flag      : OUT STD_LOGIC;
+            Carry_flag     : OUT STD_LOGIC;
+            Borrow_flag    : OUT STD_LOGIC;
+            Overflow_flag  : OUT STD_LOGIC;
+            Greater_flag   : OUT STD_LOGIC;
+            Equal_flag     : OUT STD_LOGIC
         );
-    end component;
+    end COMPONENT;
 
-    component Left_Rotate is
+    COMPONENT Left_Rotate is
         Generic (
             size : integer := size
         );
         Port (
-            CLK            : in  std.logic;
-            Reset          : in  std.logic;
-            Rotate         : in  std.logic;
-            A              : in  STD.LOGIC_VECTOR(size-1 downto 0);
-            Result         : out STD.LOGIC_VECTOR(size-1 downto 0);
-            Zero_flag      : out std.logic;
-            Carry_flag     : out std.logic;
-            Borrow_flag    : out std.logic;
-            Overflow_flag  : out std.logic;
-            Greater_flag   : out std.logic;
-            Equal_flag     : out std.logic
+            CLK            : IN  STD_LOGIC;
+            Reset          : IN  STD_LOGIC;
+            Rotate         : IN  STD_LOGIC;
+            A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Result         : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Zero_flag      : OUT STD_LOGIC;
+            Carry_flag     : OUT STD_LOGIC;
+            Borrow_flag    : OUT STD_LOGIC;
+            Overflow_flag  : OUT STD_LOGIC;
+            Greater_flag   : OUT STD_LOGIC;
+            Equal_flag     : OUT STD_LOGIC
         );
-    end component;
+    end COMPONENT;
 
-    component Right_Rotate is
+    COMPONENT Right_Rotate is
         Generic (
             size : integer := size
         );
         Port (
-            CLK            : in  std.logic;
-            Reset          : in  std.logic;
-            Rotate         : in  std.logic;
-            A              : in  STD.LOGIC_VECTOR(size-1 downto 0);
-            Result         : out STD.LOGIC_VECTOR(size-1 downto 0);
-            Zero_flag      : out std.logic;
-            Carry_flag     : out std.logic;
-            Borrow_flag    : out std.logic;
-            Overflow_flag  : out std.logic;
-            Greater_flag   : out std.logic;
-            Equal_flag     : out std.logic
+            CLK            : IN  STD_LOGIC;
+            Reset          : IN  STD_LOGIC;
+            Rotate         : IN  STD_LOGIC;
+            A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Result         : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Zero_flag      : OUT STD_LOGIC;
+            Carry_flag     : OUT STD_LOGIC;
+            Borrow_flag    : OUT STD_LOGIC;
+            Overflow_flag  : OUT STD_LOGIC;
+            Greater_flag   : OUT STD_LOGIC;
+            Equal_flag     : OUT STD_LOGIC
         );
-    end component;
+    end COMPONENT;
 
-    component Right_Shift_Register is
+    COMPONENT Shift_Register_Left
+        Generic (
+            size : integer := 4
+        );
+        Port (
+            clk         : IN  STD_LOGIC;
+            reset       : IN  STD_LOGIC;
+            shift       : IN  STD_LOGIC;
+            A           : IN  STD_LOGIC_VECTOR(size-1 downto 0);
+            Result      : OUT STD_LOGIC_VECTOR(size-1 downto 0);
+            Zero_flag    : OUT STD_LOGIC;
+            Carry_flag   : OUT STD_LOGIC;
+            Borrow_flag  : OUT STD_LOGIC;
+            Overflow_flag : OUT STD_LOGIC;
+            Greater_flag  : OUT STD_LOGIC;
+            Equal_flag    : OUT STD_LOGIC
+        );
+    end COMPONENT;
+
+    COMPONENT Right_Shift_Register is
         Generic (
             size : integer := size
         );
         Port (
-            CLK            : in  std.logic;
-            Reset          : in  std.logic;
-            Shift          : in  std.logic;
-            A              : in  STD.LOGIC_VECTOR(size-1 downto 0);
-            Result         : out STD.LOGIC_VECTOR(size-1 downto 0);
-            Zero_flag      : out std.logic;
-            Carry_flag     : out std.logic;
-            Borrow_flag    : out std.logic;
-            Overflow_flag  : out std.logic;
-            Greater_flag   : out std.logic;
-            Equal_flag     : out std.logic
+            CLK            : IN  STD_LOGIC;
+            Reset          : IN  STD_LOGIC;
+            Shift          : IN  STD_LOGIC;
+            A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Result         : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Zero_flag      : OUT STD_LOGIC;
+            Carry_flag     : OUT STD_LOGIC;
+            Borrow_flag    : OUT STD_LOGIC;
+            Overflow_flag  : OUT STD_LOGIC;
+            Greater_flag   : OUT STD_LOGIC;
+            Equal_flag     : OUT STD_LOGIC
         );
-    end component;
+    end COMPONENT;
 
-    component Arithmetic_Right_Shift is
+    COMPONENT Arithmetic_Right_Shift is
         Generic (
             size : integer := size
         );
         Port (
-            CLK            : in  std.logic;
-            Reset          : in  std.logic;
-            Shift          : in  std.logic;
-            A              : in  STD.LOGIC_VECTOR(size-1 downto 0);
-            Result         : out STD.LOGIC_VECTOR(size-1 downto 0);
-            Zero_flag      : out std.logic;
-            Carry_flag     : out std.logic;
-            Borrow_flag    : out std.logic;
-            Overflow_flag  : out std.logic;
-            Greater_flag   : out std.logic;
-            Equal_flag     : out std.logic
+            CLK            : IN  STD_LOGIC;
+            Reset          : IN  STD_LOGIC;
+            Shift          : IN  STD_LOGIC;
+            A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Result         : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Zero_flag      : OUT STD_LOGIC;
+            Carry_flag     : OUT STD_LOGIC;
+            Borrow_flag    : OUT STD_LOGIC;
+            Overflow_flag  : OUT STD_LOGIC;
+            Greater_flag   : OUT STD_LOGIC;
+            Equal_flag     : OUT STD_LOGIC
         );
-    end component;
+    end COMPONENT;
 
-    component Generic_Subtractor is
+    COMPONENT Generic_Subtractor is
         Generic (
             size : integer := size
         );
         Port (
-            A              : in  STD.LOGIC_VECTOR(size-1 downto 0);
-            B              : in  STD.LOGIC_VECTOR(size-1 downto 0);
-            Bin            : in  std.logic;
-            Diff           : out STD.LOGIC_VECTOR(size-1 downto 0);
-            Zero_flag      : out std.logic;
-            Carry_flag     : out std.logic;
-            Borrow_flag    : out std.logic;
-            Overflow_flag  : out std.logic;
-            Greater_flag   : out std.logic;
-            Equal_flag     : out std.logic
+            A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            B              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Bin            : IN  STD_LOGIC;
+            Diff           : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Zero_flag      : OUT STD_LOGIC;
+            Carry_flag     : OUT STD_LOGIC;
+            Borrow_flag    : OUT STD_LOGIC;
+            Overflow_flag  : OUT STD_LOGIC;
+            Greater_flag   : OUT STD_LOGIC;
+            Equal_flag     : OUT STD_LOGIC
         );
-    end component;
+    end COMPONENT;
 
-    component GENERIC_XOR is
+    COMPONENT GENERIC_XOR is
         Generic (
             size : integer := size
         );
         Port (
-            A              : in  STD_LOGIC_VECTOR(size-1 downto 0);
-            B              : in  STD.LOGIC_VECTOR(size-1 downto 0);
-            Result         : buffer STD.LOGIC_VECTOR(size-1 downto 0);
-            Zero_flag      : out std.logic;
-            Carry_flag     : out std.logic;
-            Borrow_flag    : out std.logic;
-            Overflow_flag  : out std.logic;
-            Greater_flag   : out std.logic;
-            Equal_flag     : out std.logic
+            A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            B              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Result         : BUFFER STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Zero_flag      : OUT STD_LOGIC;
+            Carry_flag     : OUT STD_LOGIC;
+            Borrow_flag    : OUT STD_LOGIC;
+            Overflow_flag  : OUT STD_LOGIC;
+            Greater_flag   : OUT STD_LOGIC;
+            Equal_flag     : OUT STD_LOGIC
         );
-    end component;
+    end COMPONENT;
 
-    signal temp_result : STD.LOGIC_VECTOR(size-1 downto 0);
-    signal carry, borrow, overflow, greater, equal, zero : STD.LOGIC;
+    SIGNAL add_res , sub_res , and_res , not_res , or_res , xor_res ,
+           rshift_res , lshift_res , signshift_res , Rrotate_res , Lrotate_res : STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+    SIGNAL carry, borrow, overflow, greater, equal, zero : STD_LOGIC;
 
 begin
-    process(opcode, A, B)
+
+    u1: Generic_Adder
+        generic map (size => size)
+        port map (
+            A => A,
+            B => B,
+            Cin => '0',
+            Sum => add_res,
+            Zero_flag => zero,
+            Carry_flag => carry,
+            Borrow_flag => borrow,
+            Overflow_flag => overflow,
+            Greater_flag => greater,
+            Equal_flag => equal
+        );
+
+    u2: Generic_Subtractor
+        generic map (size => size)
+        port map (
+            A => A,
+            B => B,
+            Bin => '0',
+            Diff => sub_res,
+            Zero_flag => zero,
+            Carry_flag => carry,
+            Borrow_flag => borrow,
+            Overflow_flag => overflow,
+            Greater_flag => greater,
+            Equal_flag => equal
+        );
+
+    u3: GENERIC_AND
+        generic map (size => size)
+        port map (
+            A => A,
+            B => B,
+            Result => and_res,
+            Zero_flag => zero,
+            Carry_flag => carry,
+            Borrow_flag => borrow,
+            Overflow_flag => overflow,
+            Greater_flag => greater,
+            Equal_flag => equal
+        );
+
+    u4: GENERIC_OR
+        generic map (size => size)
+        port map (
+            A => A,
+            B => B,
+            Result => or_res,
+            Zero_flag => zero,
+            Carry_flag => carry,
+            Borrow_flag => borrow,
+            Overflow_flag => overflow,
+            Greater_flag => greater,
+            Equal_flag => equal
+        );
+
+
+    u5: GENERIC_NOT
+        generic map (size => size)
+        port map (
+            A => A,
+            Result => not_res,
+            Zero_flag => zero,
+            Carry_flag => carry,
+            Borrow_flag => borrow,
+            Overflow_flag => overflow,
+            Greater_flag => greater,
+            Equal_flag => equal
+        );
+
+    u6: GENERIC_XOR
+        generic map (size => size)
+        port map (
+            A => A,
+            B => B,
+            Result => xor_res,
+            Zero_flag => zero,
+            Carry_flag => carry,
+            Borrow_flag => borrow,
+            Overflow_flag => overflow,
+            Greater_flag => greater,
+            Equal_flag => equal
+        );
+
+    u7: Left_Rotate
+        generic map (size => size)
+        port map (
+            CLK => '0',
+            Reset => '0',
+            Rotate => '1',
+            A => A,
+            Result => Lrotate_res ,
+            Zero_flag => zero,
+            Carry_flag => carry,
+            Borrow_flag => borrow,
+            Overflow_flag => overflow,
+            Greater_flag => greater,
+            Equal_flag => equal
+        );
+
+    u8: Right_Rotate
+        generic map (size => size)
+        port map (
+            CLK => '0',
+            Reset => '0',
+            Rotate => '1',
+            A => A,
+            Result => Rrotate_res,
+            Zero_flag => zero,
+            Carry_flag => carry,
+            Borrow_flag => borrow,
+            Overflow_flag => overflow,
+            Greater_flag => greater,
+            Equal_flag => equal
+        );
+
+    u9: Shift_Register_Left
+    generic map (size => size)
+    port map (
+        CLK => '0',
+        Reset => '0',
+        Shift => '1',
+        A => A,
+        Result => lshift_res,
+        Zero_flag => zero,
+        Carry_flag => carry,
+        Borrow_flag => borrow,
+        Overflow_flag => overflow,
+        Greater_flag => greater,
+        Equal_flag => equal
+    );
+        
+
+    u10: Right_Shift_Register
+        generic map (size => size)
+        port map (
+            CLK => '0',
+            Reset => '0',
+            Shift => '1',
+            A => A,
+            Result => rshift_res,
+            Zero_flag => zero,
+            Carry_flag => carry,
+            Borrow_flag => borrow,
+            Overflow_flag => overflow,
+            Greater_flag => greater,
+            Equal_flag => equal
+        );
+
+    u11: Arithmetic_Right_Shift
+        generic map (size => size)
+        port map (
+            CLK => '0',
+            Reset => '0',
+            Shift => '1',
+            A => A,
+            Result => signshift_res,
+            Zero_flag => zero,
+            Carry_flag => carry,
+            Borrow_flag => borrow,
+            Overflow_flag => overflow,
+            Greater_flag => greater,
+            Equal_flag => equal
+        );
+
+    process(Opcode, A, B)
     begin
-        case opcode is
+        case Opcode is
             when "0000" =>
-                u1: Generic_Adder
-                    generic map (size => size)
-                    port map (
-                        A => A,
-                        B => B,
-                        Cin => '0',
-                        Sum => temp_result,
-                        Zero_flag => zero,
-                        Carry_flag => carry,
-                        Borrow_flag => borrow,
-                        Overflow_flag => overflow,
-                        Greater_flag => greater,
-                        Equal_flag => equal
-                    );
-                result <= temp_result;  -- Addition
+                result <= add_res ;  -- Addition
 
             when "0001" =>
-                u2: Generic_Subtractor
-                    generic map (size => size)
-                    port map (
-                        A => A,
-                        B => B,
-                        Bin => '0',
-                        Diff => temp_result,
-                        Zero_flag => zero,
-                        Carry_flag => carry,
-                        Borrow_flag => borrow,
-                        Overflow_flag => overflow,
-                        Greater_flag => greater,
-                        Equal_flag => equal
-                    );
-                result <= temp_result;  -- Subtraction
+                result <= add_res ;  -- Subtraction
 
             when "0010" =>
-                u3: GENERIC_AND
-                    generic map (size => size)
-                    port map (
-                        A => A,
-                        B => B,
-                        Result => temp_result,
-                        Zero_flag => zero,
-                        Carry_flag => carry,
-                        Borrow_flag => borrow,
-                        Overflow_flag => overflow,
-                        Greater_flag => greater,
-                        Equal_flag => equal
-                    );
-                result <= temp_result;  -- AND
+                result <= and_res ;  -- AND
 
             when "0011" =>
-                u4: GENERIC_OR
-                    generic map (size => size)
-                    port map (
-                        A => A,
-                        B => B,
-                        Result => temp_result,
-                        Zero_flag => zero,
-                        Carry_flag => carry,
-                        Borrow_flag => borrow,
-                        Overflow_flag => overflow,
-                        Greater_flag => greater,
-                        Equal_flag => equal
-                    );
-                result <= temp_result;  -- OR
+                result <= or_res ;  -- OR
 
             when "0100" =>
-                u5: generic_not
-                    generic map (size => size)
-                    port map (
-                        A => A,
-                        Result => temp_result,
-                        Zero_flag => zero,
-                        Carry_flag => carry,
-                        Borrow_flag => borrow,
-                        Overflow_flag => overflow,
-                        Greater_flag => greater,
-                        Equal_flag => equal
-                    );
-                result <= temp_result;  -- NOT
+                result <= not_res ;  -- NOT
 
             when "0101" =>
-                u6: GENERIC_XOR
-                    generic map (size => size)
-                    port map (
-                        A => A,
-                        B => B,
-                        Result => temp_result,
-                        Zero_flag => zero,
-                        Carry_flag => carry,
-                        Borrow_flag => borrow,
-                        Overflow_flag => overflow,
-                        Greater_flag => greater,
-                        Equal_flag => equal
-                    );
-                result <= temp_result;  -- XOR
-
-            when "1000" =>
-                u7: Left_Rotate
-                    generic map (size => size)
-                    port map (
-                        CLK => '0',
-                        Reset => '0',
-                        Rotate => '1',
-                        A => A,
-                        Result => temp_result,
-                        Zero_flag => zero,
-                        Carry_flag => carry,
-                        Borrow_flag => borrow,
-                        Overflow_flag => overflow,
-                        Greater_flag => greater,
-                        Equal_flag => equal
-                    );
-                result <= temp_result;  -- Rotate left
-
-            when "1001" =>
-                u8: Right_Rotate
-                    generic map (size => size)
-                    port map (
-                        CLK => '0',
-                        Reset => '0',
-                        Rotate => '1',
-                        A => A,
-                        Result => temp_result,
-                        Zero_flag => zero,
-                        Carry_flag => carry,
-                        Borrow_flag => borrow,
-                        Overflow_flag => overflow,
-                        Greater_flag => greater,
-                        Equal_flag => equal
-                    );
-                result <= temp_result;  -- Rotate right
+                result <= xor_res ;  -- XOR
 
             when "0110" =>
-                u9: Right_Shift_Register
-                    generic map (size => size)
-                    port map (
-                        CLK => '0',
-                        Reset => '0',
-                        Shift => '1',
-                        A => A,
-                        Result => temp_result,
-                        Zero_flag => zero,
-                        Carry_flag => carry,
-                        Borrow_flag => borrow,
-                        Overflow_flag => overflow,
-                        Greater_flag => greater,
-                        Equal_flag => equal
-                    );
-                result <= temp_result;  -- Logical right shift
+                result <= Lrotate_res ;  -- Rotate left
 
             when "0111" =>
-                u10: Arithmetic_Right_Shift
-                    generic map (size => size)
-                    port map (
-                        CLK => '0',
-                        Reset => '0',
-                        Shift => '1',
-                        A => A,
-                        Result => temp_result,
-                        Zero_flag => zero,
-                        Carry_flag => carry,
-                        Borrow_flag => borrow,
-                        Overflow_flag => overflow,
-                        Greater_flag => greater,
-                        Equal_flag => equal
-                    );
-                result <= temp_result;  -- Arithmetic right shift
+                result <= Rrotate_res ;  -- Rotate right
+
+            when "1000" =>
+                result <= lshift_res ;  -- Logical left shift
+
+            when "1001" =>
+                result <= rshift_res ;  -- Logical right shift
+
+            when "1010" =>
+                result <= signshift_res ;  -- Arithmetic right shift
 
             when others =>
                 result <= (others => '0');  -- Default case

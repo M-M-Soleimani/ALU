@@ -2,7 +2,7 @@ LIBRARY IEEE ;
 USE IEEE.STD_LOGIC_1164.ALL ;
 USE IEEE.NUMERIC_STD.ALL ;
 
-ENTITY generic_not IS 
+ENTITY GENERIC_NOT IS 
     GENERIC ( size : INTEGER := 4 );
     PORT ( A : IN STD_LOGIC_VECTOR (size-1 DOWNTO 0);
            Result : BUFFER STD_LOGIC_VECTOR (size-1 DOWNTO 0);
@@ -13,9 +13,9 @@ ENTITY generic_not IS
            Greater_flag : OUT STD_LOGIC ;
            Equal_flag : OUT STD_LOGIC 
     );
-END generic_not ;
+END GENERIC_NOT ;
 
-ARCHITECTURE Behavior OF generic_not IS 
+ARCHITECTURE Behavior OF GENERIC_NOT IS 
 BEGIN 
     PROCESS(A)
     BEGIN
