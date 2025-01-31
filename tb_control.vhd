@@ -117,6 +117,16 @@ begin
         shift <= '0';
         wait for 20 ns;
 
+        Opcode <= "1100";  -- comparison A > B
+        A <= "1111";       
+        B <= "1100";       
+        wait for 20 ns;
+
+        Opcode <= "1001";  -- check A equal B
+        A <= "1001";       
+        B <= "1001";       
+        wait for 20 ns;
+
         wait;  -- Wait indefinitely to end the simulation
     end process;
 

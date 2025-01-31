@@ -391,6 +391,23 @@ begin
             Equal_flag => equal
         );
 
+    u12: Comparator
+        generic map (size => size)
+        port map (
+            A => A,
+            B => B,
+            Result => Result
+        );
+
+    u13: Equality_Check
+        generic map (size => size)
+        port map (
+            A => A,
+            B => B,
+            Result => Result
+        );
+
+
     process(Opcode, A, B)
     begin
         case Opcode is
@@ -427,6 +444,12 @@ begin
             when "1011" =>
                 result <= signshift_res ;  -- Arithmetic right shift
 
+            when "1100" =>
+                result <= signshift_res ;  -- Arithmetic right shift
+            
+            when "1101" =>
+                result <= signshift_res ;  -- Arithmetic right shift
+            
             when others =>
                 result <= (others => '0');  -- Default case
         end case;
