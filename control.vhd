@@ -8,8 +8,12 @@ entity Generic_Control_Unit is
     );
     Port (
         Opcode : IN  STD_LOGIC_VECTOR (3 DOWNTO 0);
-        A : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
-        B : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
+        A      : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
+        B      : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
+        CLK    : IN  STD_LOGIC;
+        reset  : IN  STD_LOGIC;
+        shift  : IN  STD_LOGIC;
+        rotate : IN  STD_LOGIC;
         result : OUT  STD_LOGIC_VECTOR (size-1 DOWNTO 0)
     );
 end Generic_Control_Unit;
@@ -309,9 +313,9 @@ begin
     u7: Left_Rotate
         generic map (size => size)
         port map (
-            CLK => '0',
-            Reset => '0',
-            Rotate => '1',
+            CLK => CLK,
+            Reset => reset,
+            Rotate => rotate,
             A => A,
             Result => Lrotate_res ,
             Zero_flag => zero,
@@ -325,9 +329,9 @@ begin
     u8: Right_Rotate
         generic map (size => size)
         port map (
-            CLK => '0',
-            Reset => '0',
-            Rotate => '1',
+            CLK => CLK,
+            Reset => reset,
+            Rotate => rotate,
             A => A,
             Result => Rrotate_res,
             Zero_flag => zero,
@@ -341,9 +345,9 @@ begin
     u9: Shift_Register_Left
     generic map (size => size)
     port map (
-        CLK => '0',
-        Reset => '0',
-        Shift => '1',
+        CLK => CLK,
+        Reset => reset,
+        Shift => shift,
         A => A,
         Result => lshift_res,
         Zero_flag => zero,
@@ -358,9 +362,9 @@ begin
     u10: Right_Shift_Register
         generic map (size => size)
         port map (
-            CLK => '0',
-            Reset => '0',
-            Shift => '1',
+            CLK => CLK,
+            Reset => reset,
+            Shift => shift,
             A => A,
             Result => rshift_res,
             Zero_flag => zero,
@@ -374,9 +378,9 @@ begin
     u11: Arithmetic_Right_Shift
         generic map (size => size)
         port map (
-            CLK => '0',
-            Reset => '0',
-            Shift => '1',
+            CLK => CLK,
+            Reset => reset,
+            Shift => shift,
             A => A,
             Result => signshift_res,
             Zero_flag => zero,
@@ -394,7 +398,7 @@ begin
                 result <= add_res ;  -- Addition
 
             when "0001" =>
-                result <= add_res ;  -- Subtraction
+                result <= sub_res ;  -- Subtraction
 
             when "0010" =>
                 result <= and_res ;  -- AND
