@@ -283,7 +283,7 @@ begin
         );
 
 
-    u5: GENERIC_NOT
+    u5: generic_not
         generic map (size => size)
         port map (
             A => A,
@@ -394,37 +394,37 @@ begin
     process(Opcode, A, B)
     begin
         case Opcode is
-            when "0000" =>
+            when "0001" =>
                 result <= add_res ;  -- Addition
 
-            when "0001" =>
+            when "0010" =>
                 result <= sub_res ;  -- Subtraction
 
-            when "0010" =>
+            when "0011" =>
                 result <= and_res ;  -- AND
 
-            when "0011" =>
+            when "0100" =>
                 result <= or_res ;  -- OR
 
-            when "0100" =>
+            when "0101" =>
                 result <= not_res ;  -- NOT
 
-            when "0101" =>
+            when "0110" =>
                 result <= xor_res ;  -- XOR
 
-            when "0110" =>
+            when "0111" =>
                 result <= Lrotate_res ;  -- Rotate left
 
-            when "0111" =>
+            when "1000" =>
                 result <= Rrotate_res ;  -- Rotate right
 
-            when "1000" =>
+            when "1001" =>
                 result <= lshift_res ;  -- Logical left shift
 
-            when "1001" =>
+            when "1010" =>
                 result <= rshift_res ;  -- Logical right shift
 
-            when "1010" =>
+            when "1011" =>
                 result <= signshift_res ;  -- Arithmetic right shift
 
             when others =>

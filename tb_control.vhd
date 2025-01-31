@@ -7,16 +7,14 @@ end tb_Generic_Control_Unit;
 
 architecture Behavioral of tb_Generic_Control_Unit is
 
-    constant SIZE : integer := 4;
-
-    signal Opcode : STD_LOGIC_VECTOR(3 DOWNTO 0);
-    signal A      : STD_LOGIC_VECTOR(SIZE-1 DOWNTO 0);
-    signal B      : STD_LOGIC_VECTOR(SIZE-1 DOWNTO 0);
+    signal Opcode : STD_LOGIC_VECTOR(3 DOWNTO 0) := ( OTHERS => '0' );
+    signal A      : STD_LOGIC_VECTOR(3 DOWNTO 0) := ( OTHERS => '0' );
+    signal B      : STD_LOGIC_VECTOR(3 DOWNTO 0) := ( OTHERS => '0' );
     signal CLK    : STD_LOGIC := '0';
     signal reset  : STD_LOGIC := '0';
     signal shift  : STD_LOGIC := '0';
     signal rotate : STD_LOGIC := '0';
-    signal result : STD_LOGIC_VECTOR(SIZE-1 DOWNTO 0);
+    signal result : STD_LOGIC_VECTOR(3 DOWNTO 0);
 
     constant CLK_PERIOD : time := 10 ns;
 
@@ -24,7 +22,7 @@ begin
 
     uut: entity work.Generic_Control_Unit
         generic map (
-            size => SIZE
+            size => 4
         )
         port map (
             Opcode => Opcode,
@@ -55,64 +53,64 @@ begin
         reset <= '0';
         wait for 20 ns;
 
-        Opcode <= "0000";  -- Addition
+        Opcode <= "0001";  -- Addition
         A <= "0011";       
         B <= "0001";       
         wait for 20 ns;
 
-        Opcode <= "0001";  -- Subtraction
+        Opcode <= "0010";  -- Subtraction
         A <= "0011";       
         B <= "0001";       
         wait for 20 ns;
 
-        Opcode <= "0010";  -- AND
+        Opcode <= "0011";  -- AND
         A <= "1100";       
         B <= "1010";       
         wait for 20 ns;
 
-        Opcode <= "0011";  -- OR
+        Opcode <= "0100";  -- OR
         A <= "1100";       
         B <= "1010";       
         wait for 20 ns;
 
-        Opcode <= "0100";  -- NOT
+        Opcode <= "0101";  -- NOT
         A <= "1100";       
         wait for 20 ns;
 
-        Opcode <= "0101";  -- XOR
+        Opcode <= "0110";  -- XOR
         A <= "1100";       
         B <= "1010";       
         wait for 20 ns;
 
-        Opcode <= "0110";  -- Rotate left
+        Opcode <= "0111";  -- Rotate left
         A <= "1100";       
         rotate <= '1';
         wait for 20 ns;
         rotate <= '0';
         wait for 20 ns;
 
-        Opcode <= "0111";  -- Rotate right
+        Opcode <= "1000";  -- Rotate right
         A <= "1100";       
         rotate <= '1';
         wait for 20 ns;
         rotate <= '0';
         wait for 20 ns;
 
-        Opcode <= "1000";  -- Logical left shift
+        Opcode <= "1001";  -- Logical left shift
         A <= "0001";       
         shift <= '1';
         wait for 20 ns;
         shift <= '0';
         wait for 20 ns;
 
-        Opcode <= "1001";  -- Logical right shift
+        Opcode <= "1010";  -- Logical right shift
         A <= "0010";       
         shift <= '1';
         wait for 20 ns;
         shift <= '0';
         wait for 20 ns;
 
-        Opcode <= "1010";  -- Arithmetic right shift
+        Opcode <= "1011";  -- Arithmetic right shift
         A <= "1100";       
         shift <= '1';
         wait for 20 ns;
