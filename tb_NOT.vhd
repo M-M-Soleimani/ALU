@@ -6,6 +6,7 @@ ENTITY tb_not IS
 END tb_not ;
 
 ARCHITECTURE Behavior OF tb_not IS 
+
     SIGNAL A : STD_LOGIC_VECTOR ( 3 DOWNTO 0 ) := "0000";
     SIGNAL RESULT : STD_LOGIC_VECTOR ( 3 DOWNTO 0 );
     SIGNAL Zero_flag : STD_LOGIC ;
@@ -14,8 +15,23 @@ ARCHITECTURE Behavior OF tb_not IS
     SIGNAL Overflow_flag : STD_LOGIC ;
     SIGNAL Greater_flag : STD_LOGIC ;
     SIGNAL Equal_flag : STD_LOGIC ;
+
+    COMPONENT generic_not
+    GENERIC (size : INTEGER := 4);
+    PORT (
+        A : IN STD_LOGIC_VECTOR(size-1 downto 0);
+        Result : BUFFER STD_LOGIC_VECTOR(size-1 downto 0);
+        Zero_flag : OUT STD_LOGIC ;
+        Carry_flag : OUT STD_LOGIC ;
+        Borrow_flag : OUT STD_LOGIC ;
+        Overflow_flag : OUT STD_LOGIC ;
+        Greater_flag : OUT STD_LOGIC ;
+        Equal_flag : OUT STD_LOGIC
+    );
+    END COMPONENT;
+
 BEGIN 
-    UUT : ENTITY WORK.GENERIC_NOT 
+    UUT : generic_not 
     GENERIC MAP ( size => 4 )
     PORT MAP (
         A => A ,

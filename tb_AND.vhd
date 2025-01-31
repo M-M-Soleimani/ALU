@@ -18,8 +18,23 @@ ARCHITECTURE behavior OF tb_AND IS
     SIGNAL Greater_flag : STD_LOGIC ;
     SIGNAL Equal_flag : STD_LOGIC ;
 
+    COMPONENT GENERIC_AND
+    GENERIC (size : INTEGER := 4);
+    PORT (
+        A : IN STD_LOGIC_VECTOR(size-1 downto 0);
+        B : IN STD_LOGIC_VECTOR(size-1 downto 0);
+        Result : BUFFER STD_LOGIC_VECTOR(size-1 downto 0);
+        Zero_flag : OUT STD_LOGIC ;
+        Carry_flag : OUT STD_LOGIC ;
+        Borrow_flag : OUT STD_LOGIC ;
+        Overflow_flag : OUT STD_LOGIC ;
+        Greater_flag : OUT STD_LOGIC ;
+        Equal_flag : OUT STD_LOGIC
+    );
+    END COMPONENT;
+
 BEGIN
-    UUT: ENTITY WORK.GENERIC_AND
+    UUT: GENERIC_AND
         GENERIC MAP ( size => 4 )
         PORT MAP (
             A => A ,
