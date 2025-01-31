@@ -2,7 +2,7 @@ LIBRARY IEEE ;
 USE IEEE.STD_LOGIC_1164.ALL ;
 USE IEEE.NUMERIC_STD.ALL ;
 
-ENTITY Right_Shift_Register IS 
+ENTITY Arithmetic_Right_Shift IS 
     GENERIC ( size : INTEGER := 4 );
     PORT (
         CLK : IN STD_LOGIC ;
@@ -17,36 +17,36 @@ ENTITY Right_Shift_Register IS
         Greater_flag : OUT STD_LOGIC ;
         Equal_flag : OUT STD_LOGIC 
     );
-END Right_Shift_Register ;
+END Arithmetic_Right_Shift ;
 
-ARCHITECTURE Behavior OF Right_Shift_Register IS 
+ARCHITECTURE Behavioral OF Arithmetic_Right_Shift IS 
     SIGNAL Reg : STD_LOGIC_VECTOR ( size - 1 DOWNTO 0 );
 BEGIN 
-    PROCESS( CLK , Reset )
-    BEGIN
-        if ( Reset = '1' ) then 
+    PROCESS ( CLK , Reset )
+    BEGIN 
+        if ( Reset = '1' ) then
             Reg <= ( OTHERS => '0' );
         elsif rising_edge (CLK) then
             if Shift = '1' then 
-                Reg <= "0" & Reg ( size - 1 DOWNTO 1 );
+                Reg <= A (size - 1) & A ( size - 1 DOWNTO 1 );
             else
                 Reg <= A ;
             end if ;
-        end if ;
+        end if ;    
     END PROCESS ;
-        
+
     Result <= Reg ;
 
     PROCESS ( Reg , A )
     BEGIN 
-
+            
         Zero_flag <= '1';
         for i in 0 to size-1 loop
-            if reg(i) = '1' then
+            if Reg(i) = '1' then
                 Zero_flag <= '0';
             end if ;
         end loop ;
-       
+
         Carry_flag <= Reg(0) ;
         Borrow_flag <= '0'; 
         Overflow_flag <= '0'; 
@@ -63,7 +63,5 @@ BEGIN
         end if ;
     END PROCESS ;
 
-END Behavior ;
-
-
-
+END Behavioral ;
+            
