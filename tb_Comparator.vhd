@@ -2,15 +2,15 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-entity Comparison_tb is
-end Comparison_tb;
+entity Comparator_tb is
+end Comparator_tb;
 
-architecture Behavioral of Comparison_tb is
+architecture Behavioral of Comparator_tb is
     signal A : STD_LOGIC_VECTOR (3 downto 0);
     signal B : STD_LOGIC_VECTOR (3 downto 0);
     signal Result : STD_LOGIC;
 
-    component Comparison
+    component Comparator
         Generic ( size : INTEGER := 4 );
         Port (
             A : in  STD_LOGIC_VECTOR (size-1 downto 0);
@@ -20,7 +20,7 @@ architecture Behavioral of Comparison_tb is
     end component;
 
 begin
-    uut: Comparison
+    uut: Comparator
         port map (
             A => A,
             B => B,

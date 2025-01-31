@@ -7,13 +7,19 @@ entity Generic_Control_Unit is
         size : integer := 4
     );
     Port (
-        Opcode : IN  STD_LOGIC_VECTOR (3 DOWNTO 0);
-        A      : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
-        B      : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
-        CLK    : IN  STD_LOGIC;
-        reset  : IN  STD_LOGIC;
-        shift  : IN  STD_LOGIC;
-        rotate : IN  STD_LOGIC;
+        Opcode        : IN  STD_LOGIC_VECTOR (3 DOWNTO 0);
+        A             : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
+        B             : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
+        CLK           : IN  STD_LOGIC;
+        reset         : IN  STD_LOGIC;
+        shift         : IN  STD_LOGIC;
+        rotate        : IN  STD_LOGIC;
+        Zero_flag     : out std_logic;
+        Carry_flag    : out std_logic;
+        Borrow_flag   : out std_logic;
+        Overflow_flag : out std_logic;
+        Greater_flag  : out std_logic;
+        Equal_flag    : out std_logic;
         result : OUT  STD_LOGIC_VECTOR (size-1 DOWNTO 0)
     );
 end Generic_Control_Unit;
@@ -218,6 +224,28 @@ architecture Behavioral of Generic_Control_Unit is
         );
     end COMPONENT;
 
+    component Comparator
+        Generic (
+            size : integer := size
+        );
+        Port (
+            A : in  STD_LOGIC_VECTOR (size-1 downto 0);
+            B : in  STD_LOGIC_VECTOR (size-1 downto 0);
+            Result : out STD_LOGIC
+        );
+    end component;
+
+    component Equality_Check
+        Generic (
+            size : integer := size
+        );
+        Port (
+            A : in  STD_LOGIC_VECTOR (size-1 downto 0);
+            B : in  STD_LOGIC_VECTOR (size-1 downto 0);
+            Result : out STD_LOGIC
+        );
+    end component;
+
     SIGNAL add_res , sub_res , and_res , not_res , or_res , xor_res ,
            rshift_res , lshift_res , signshift_res , Rrotate_res , Lrotate_res : STD_LOGIC_VECTOR(size-1 DOWNTO 0);
     SIGNAL carry, borrow, overflow, greater, equal, zero : STD_LOGIC;
@@ -396,7 +424,7 @@ begin
         port map (
             A => A,
             B => B,
-            Result => Result
+            Result => greater
         );
 
     u13: Equality_Check
@@ -404,7 +432,7 @@ begin
         port map (
             A => A,
             B => B,
-            Result => Result
+            Result => equal
         );
 
 
@@ -413,42 +441,120 @@ begin
         case Opcode is
             when "0001" =>
                 result <= add_res ;  -- Addition
+                Zero_flag       <= zero;
+                Carry_flag      <= carry;
+                Borrow_flag     <= borrow;
+                Overflow_flag   <= overflow;
+                Greater_flag    <= greater;
+                Equal_flag      <= equal;
 
             when "0010" =>
                 result <= sub_res ;  -- Subtraction
+                Zero_flag       <= zero;
+                Carry_flag      <= carry;
+                Borrow_flag     <= borrow;
+                Overflow_flag   <= overflow;
+                Greater_flag    <= greater;
+                Equal_flag      <= equal;
 
             when "0011" =>
                 result <= and_res ;  -- AND
+                Zero_flag       <= zero;
+                Carry_flag      <= carry;
+                Borrow_flag     <= borrow;
+                Overflow_flag   <= overflow;
+                Greater_flag    <= greater;
+                Equal_flag      <= equal;
 
             when "0100" =>
                 result <= or_res ;  -- OR
+                Zero_flag       <= zero;
+                Carry_flag      <= carry;
+                Borrow_flag     <= borrow;
+                Overflow_flag   <= overflow;
+                Greater_flag    <= greater;
+                Equal_flag      <= equal;
 
             when "0101" =>
                 result <= not_res ;  -- NOT
+                Zero_flag       <= zero;
+                Carry_flag      <= carry;
+                Borrow_flag     <= borrow;
+                Overflow_flag   <= overflow;
+                Greater_flag    <= greater;
+                Equal_flag      <= equal;
 
             when "0110" =>
                 result <= xor_res ;  -- XOR
+                Zero_flag       <= zero;
+                Carry_flag      <= carry;
+                Borrow_flag     <= borrow;
+                Overflow_flag   <= overflow;
+                Greater_flag    <= greater;
+                Equal_flag      <= equal;
 
             when "0111" =>
                 result <= Lrotate_res ;  -- Rotate left
+                Zero_flag       <= zero;
+                Carry_flag      <= carry;
+                Borrow_flag     <= borrow;
+                Overflow_flag   <= overflow;
+                Greater_flag    <= greater;
+                Equal_flag      <= equal;
 
             when "1000" =>
                 result <= Rrotate_res ;  -- Rotate right
+                Zero_flag       <= zero;
+                Carry_flag      <= carry;
+                Borrow_flag     <= borrow;
+                Overflow_flag   <= overflow;
+                Greater_flag    <= greater;
+                Equal_flag      <= equal;
 
             when "1001" =>
                 result <= lshift_res ;  -- Logical left shift
+                Zero_flag       <= zero;
+                Carry_flag      <= carry;
+                Borrow_flag     <= borrow;
+                Overflow_flag   <= overflow;
+                Greater_flag    <= greater;
+                Equal_flag      <= equal;
 
             when "1010" =>
                 result <= rshift_res ;  -- Logical right shift
+                Zero_flag       <= zero;
+                Carry_flag      <= carry;
+                Borrow_flag     <= borrow;
+                Overflow_flag   <= overflow;
+                Greater_flag    <= greater;
+                Equal_flag      <= equal;
 
             when "1011" =>
                 result <= signshift_res ;  -- Arithmetic right shift
+                Zero_flag       <= zero;
+                Carry_flag      <= carry;
+                Borrow_flag     <= borrow;
+                Overflow_flag   <= overflow;
+                Greater_flag    <= greater;
+                Equal_flag      <= equal;
 
             when "1100" =>
-                result <= signshift_res ;  -- Arithmetic right shift
+                result <= (others => '0'); -- comparison A > B 
+                Zero_flag       <= zero;
+                Carry_flag      <= carry;
+                Borrow_flag     <= borrow;
+                Overflow_flag   <= overflow;
+                Greater_flag    <= greater;
+                Equal_flag      <= equal;
             
             when "1101" =>
-                result <= signshift_res ;  -- Arithmetic right shift
+                result <= (others => '0');  -- equality check
+                Zero_flag       <= zero;
+                Carry_flag      <= carry;
+                Borrow_flag     <= borrow;
+                Overflow_flag   <= overflow;
+                Greater_flag    <= greater;
+                Equal_flag      <= equal;
             
             when others =>
                 result <= (others => '0');  -- Default case
