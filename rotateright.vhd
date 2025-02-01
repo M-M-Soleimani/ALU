@@ -5,8 +5,6 @@ USE IEEE.NUMERIC_STD.ALL ;
 ENTITY Right_Rotate IS 
     GENERIC ( size : INTEGER := 4 );
     PORT (
-        CLK : IN STD_LOGIC ;
-        Reset : IN STD_LOGIC ;
         Rotate : IN STD_LOGIC ; 
         A : IN STD_LOGIC_VECTOR ( size - 1 DOWNTO 0 );
         Result : OUT STD_LOGIC_VECTOR ( size - 1 DOWNTO 0 );
@@ -22,47 +20,49 @@ END Right_Rotate ;
 ARCHITECTURE Behavioral OF Right_Rotate IS
     SIGNAL Reg : STD_LOGIC_VECTOR ( size - 1 DOWNTO 0 );
 BEGIN 
-    PROCESS ( CLK , Reset )
-    BEGIN 
-        if ( Reset = '1' ) then 
-            Reg <= ( OTHERS => '0' );
-        elsif rising_edge (CLK) then 
-            if Rotate = '1' then 
-                Reg <= A(0) & A (size - 1 DOWNTO 1);
-            else 
-                Reg <= A ;
+
+    PROCESS ( Rotate , A )
+    BEGIN  
+
+        if ( Rotate = '1' ) then
+            Reg <= A(0) & A(size-1 DOWNTO 1);  
+            Carry_flag <= A(0); 
+
+            if unsigned(Reg) = unsigned(A) then
+                Equal_flag <= '1';
+            else
+                Equal_flag <= '0';
             end if ;
+            if unsigned(A) > unsigned(Reg) then
+                Greater_flag <= '1';
+            else
+                Greater_flag <= '0';
+            end if ;
+
+            if (unsigned(Reg) = 0) then
+                Zero_flag <= '1';
+            else
+                Zero_flag <= '0';
+            end if;
+        else 
+            Reg <= A;  
+            Carry_flag <= '0';  
+            Equal_flag <= '1';
+            Greater_flag <= '0';
+
+            if (unsigned(A) = 0) then
+                Zero_flag <= '1';
+            else
+                Zero_flag <= '0';
+            end if;
+
         end if ;
+
+        Borrow_flag <= '0' ;
+        Overflow_flag <= '0' ;
+
     END PROCESS ;
 
     Result <= Reg ;
 
-    PROCESS ( Reg , A )
-    BEGIN 
-
-        Zero_flag <= '1' ;
-        for i in 0 to size - 1 loop 
-            if Reg(i) = '1' then
-                Zero_flag <= '0' ;
-            end if ;
-        end loop ;
-
-        Carry_flag <= A(0);
-        Borrow_flag <= '0' ;
-        Overflow_flag <= '0' ;
-
-        if unsigned(Reg) > unsigned(A) then
-            Greater_flag <= '1';
-        else
-            Greater_flag <= '0';
-        end if ;
-
-        if unsigned(Reg) = unsigned(A) then
-            Equal_flag <= '1';
-        else
-            Equal_flag <= '0';
-        end if ;
-
-    END PROCESS ;
-
-END Behavioral ;
+END Behavioral ; 

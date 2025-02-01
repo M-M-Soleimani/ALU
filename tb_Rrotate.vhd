@@ -7,8 +7,6 @@ END tb_Right_Rotate ;
 
 ARCHITECTURE Behavior of tb_Right_Rotate IS 
 
-    SIGNAL CLK : STD_LOGIC := '0';
-    SIGNAL Reset : STD_LOGIC := '0';
     SIGNAL Rotate : STD_LOGIC := '0';             
     SIGNAL A : STD_LOGIC_VECTOR (3 downto 0) := ( OTHERS => '0' ); 
     SIGNAL Result : STD_LOGIC_VECTOR (3 downto 0); 
@@ -22,8 +20,6 @@ ARCHITECTURE Behavior of tb_Right_Rotate IS
     COMPONENT Right_Rotate
     GENERIC ( size : INTEGER := 4 );
     PORT (
-        CLK : IN STD_LOGIC ;
-        Reset : IN STD_LOGIC ;
         Rotate : IN STD_LOGIC ;             
         A : IN STD_LOGIC_VECTOR ( size - 1 DOWNTO 0 );
         Result : OUT STD_LOGIC_VECTOR ( size - 1 DOWNTO 0 );
@@ -41,8 +37,6 @@ BEGIN
     UUT : Right_Rotate
     GENERIC MAP ( size => 4 )
     PORT MAP (
-        CLK => CLK ,
-        Reset => Reset ,
         Rotate => Rotate,
         A => A ,
         Result => Result ,
@@ -54,59 +48,30 @@ BEGIN
         Equal_flag => Equal_flag
     );
 
-    clk_process : PROCESS
-    BEGIN 
-        while true loop
-            CLK <= '0';
-            WAIT FOR 10 ns ;
-            CLK <= '1';
-            WAIT FOR 10 ns ;
-        end loop ;
-    END PROCESS ;
-
     stim_proc : PROCESS 
     BEGIN 
 
-        Reset <= '1';
-        WAIT FOR 20 ns ;
-        Reset <= '0';
-
-        Rotate <= '1';
-        WAIT FOR 20 ns ;
-        Rotate <= '0';
-        WAIT FOR 20 ns ;
-        
-        A <= "1001" ;
-        WAIT FOR 20 ns ;
-        
-        Rotate <= '1';
-        WAIT FOR 20 ns ;
-        Rotate <= '0';
-        WAIT FOR 20 ns ;
-        
-        A <= "1010" ;
-        WAIT FOR 20 ns ;
-        
-        Rotate <= '1';
-        WAIT FOR 20 ns ;
-        Rotate <= '0';
-        WAIT FOR 20 ns ;
-
-        A <= "0011" ;
-        WAIT FOR 20 ns ;
-        
-        Rotate <= '1';
-        WAIT FOR 20 ns ;
-        Rotate <= '0';
-        WAIT FOR 20 ns ;
-
-        A <= "0001" ;
-        WAIT FOR 20 ns ;
-
-        Rotate <= '1';
-        WAIT FOR 20 ns ;
+    A <= "1001" ;
+    Rotate <= '1';
+    WAIT FOR 20 ns ;
     
-        WAIT ;
+    A <= "1010" ;
+    Rotate <= '1';
+    WAIT FOR 20 ns ;
+    
+    A <= "0011" ;
+    Rotate <= '1';
+    WAIT FOR 20 ns ;
+    
+    A <= "1011" ;
+    Rotate <= '0';
+    WAIT FOR 20 ns ;
+    
+    A <= "0111" ;
+    Rotate <= '1';
+    WAIT FOR 20 ns ;
+    
+    WAIT ;
     END PROCESS ;
 
 END Behavior ;
