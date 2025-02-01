@@ -435,137 +435,55 @@ begin
             Result => equal
         );
 
-
-    process(Opcode, A, B)
-    begin
-        case Opcode is
-            when "0001" =>
-                result <= add_res ;  -- Addition
-                Zero_flag       <= zero;
-                Carry_flag      <= carry;
-                Borrow_flag     <= borrow;
-                Overflow_flag   <= overflow;
-                Greater_flag    <= greater;
-                Equal_flag      <= equal;
-
-            when "0010" =>
-                result <= sub_res ;  -- Subtraction
-                Zero_flag       <= zero;
-                Carry_flag      <= carry;
-                Borrow_flag     <= borrow;
-                Overflow_flag   <= overflow;
-                Greater_flag    <= greater;
-                Equal_flag      <= equal;
-
-            when "0011" =>
-                result <= and_res ;  -- AND
-                Zero_flag       <= zero;
-                Carry_flag      <= carry;
-                Borrow_flag     <= borrow;
-                Overflow_flag   <= overflow;
-                Greater_flag    <= greater;
-                Equal_flag      <= equal;
-
-            when "0100" =>
-                result <= or_res ;  -- OR
-                Zero_flag       <= zero;
-                Carry_flag      <= carry;
-                Borrow_flag     <= borrow;
-                Overflow_flag   <= overflow;
-                Greater_flag    <= greater;
-                Equal_flag      <= equal;
-
-            when "0101" =>
-                result <= not_res ;  -- NOT
-                Zero_flag       <= zero;
-                Carry_flag      <= carry;
-                Borrow_flag     <= borrow;
-                Overflow_flag   <= overflow;
-                Greater_flag    <= greater;
-                Equal_flag      <= equal;
-
-            when "0110" =>
-                result <= xor_res ;  -- XOR
-                Zero_flag       <= zero;
-                Carry_flag      <= carry;
-                Borrow_flag     <= borrow;
-                Overflow_flag   <= overflow;
-                Greater_flag    <= greater;
-                Equal_flag      <= equal;
-
-            when "0111" =>
-                result <= Lrotate_res ;  -- Rotate left
-                Zero_flag       <= zero;
-                Carry_flag      <= carry;
-                Borrow_flag     <= borrow;
-                Overflow_flag   <= overflow;
-                Greater_flag    <= greater;
-                Equal_flag      <= equal;
-
-            when "1000" =>
-                result <= Rrotate_res ;  -- Rotate right
-                Zero_flag       <= zero;
-                Carry_flag      <= carry;
-                Borrow_flag     <= borrow;
-                Overflow_flag   <= overflow;
-                Greater_flag    <= greater;
-                Equal_flag      <= equal;
-
-            when "1001" =>
-                result <= lshift_res ;  -- Logical left shift
-                Zero_flag       <= zero;
-                Carry_flag      <= carry;
-                Borrow_flag     <= borrow;
-                Overflow_flag   <= overflow;
-                Greater_flag    <= greater;
-                Equal_flag      <= equal;
-
-            when "1010" =>
-                result <= rshift_res ;  -- Logical right shift
-                Zero_flag       <= zero;
-                Carry_flag      <= carry;
-                Borrow_flag     <= borrow;
-                Overflow_flag   <= overflow;
-                Greater_flag    <= greater;
-                Equal_flag      <= equal;
-
-            when "1011" =>
-                result <= signshift_res ;  -- Arithmetic right shift
-                Zero_flag       <= zero;
-                Carry_flag      <= carry;
-                Borrow_flag     <= borrow;
-                Overflow_flag   <= overflow;
-                Greater_flag    <= greater;
-                Equal_flag      <= equal;
-
-            when "1100" =>
-                result <= (others => '0'); -- comparison A > B 
-                Zero_flag       <= zero;
-                Carry_flag      <= carry;
-                Borrow_flag     <= borrow;
-                Overflow_flag   <= overflow;
-                Greater_flag    <= greater;
-                Equal_flag      <= equal;
-            
-            when "1101" =>
-                result <= (others => '0');  -- equality check
-                Zero_flag       <= zero;
-                Carry_flag      <= carry;
-                Borrow_flag     <= borrow;
-                Overflow_flag   <= overflow;
-                Greater_flag    <= greater;
-                Equal_flag      <= equal;
-            
-            when others =>
-                result <= (others => '0');  -- Default case
-        end case;
-    end process;
-
-    Zero_flag     <= zero ;
-    Carry_flag    <= carry ;
-    Borrow_flag   <= borrow ;
-    Overflow_flag <= overflow ;
-    Greater_flag  <= greater ;
-    Equal_flag    <= equal ;
-
-end Behavioral;
+        process(CLK, reset)
+        begin
+            if reset = '1' then
+                zero <= '1';
+                carry <= '0';
+                borrow <= '0';
+                overflow <= '0';
+                greater <= '0';
+                equal <= '0';
+                result <= (others => '0');
+            elsif rising_edge(CLK) then
+                case Opcode is
+                    when "0001" =>
+                        result <= add_res ;  -- Addition
+                    when "0010" =>
+                        result <= sub_res ;  -- Subtraction
+                    when "0011" =>
+                        result <= and_res ;  -- AND
+                    when "0100" =>
+                        result <= or_res ;  -- OR
+                    when "0101" =>
+                        result <= not_res ;  -- NOT
+                    when "0110" =>
+                        result <= xor_res ;  -- XOR
+                    when "0111" =>
+                        result <= Lrotate_res ;  -- Rotate left
+                    when "1000" =>
+                        result <= Rrotate_res ;  -- Rotate right
+                    when "1001" =>
+                        result <= lshift_res ;  -- Logical left shift
+                    when "1010" =>
+                        result <= rshift_res ;  -- Logical right shift
+                    when "1011" =>
+                        result <= signshift_res ;  -- Arithmetic right shift
+                    when "1100" =>
+                        result <= (others => '0'); -- comparison A > B
+                    when "1101" =>
+                        result <= (others => '0');  -- equality check
+                    when others =>
+                        result <= (others => '0');  -- Default case
+                end case;
+    
+                Zero_flag     <= zero ;
+                Carry_flag    <= carry ;
+                Borrow_flag   <= borrow ;
+                Overflow_flag <= overflow ;
+                Greater_flag  <= greater ;
+                Equal_flag    <= equal ;
+            end if;
+        end process;
+    
+    end Behavioral;
