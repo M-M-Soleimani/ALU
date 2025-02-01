@@ -2,97 +2,71 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-entity tb_Shift_Register_Left is
-end tb_Shift_Register_Left;
+entity tb_Left_Shift is
+end tb_Left_Shift;
 
-architecture Behavioral of tb_Shift_Register_Left is
-    signal clk         : std_logic := '0';
-    signal reset       : std_logic := '0';
-    signal shift       : std_logic := '0';
-    signal A           : std_logic_vector(3 downto 0) := (others => '0');
-    signal Result      : std_logic_vector(3 downto 0);
-    signal Zero_flag    : std_logic;
-    signal Carry_flag   : std_logic;
-    signal Borrow_flag  : std_logic;
-    signal Overflow_flag : std_logic;
-    signal Greater_flag  : std_logic;
-    signal Equal_flag    : std_logic;
+architecture Behavioral of tb_Left_Shift is
+    signal A             : STD_LOGIC_VECTOR(3 DOWNTO 0);
+    signal Shift         : STD_LOGIC;
+    signal Zero_flag     : STD_LOGIC;
+    signal Carry_flag    : STD_LOGIC;
+    signal Borrow_flag   : STD_LOGIC;
+    signal Overflow_flag : STD_LOGIC;
+    signal Greater_flag  : STD_LOGIC;
+    signal Equal_flag    : STD_LOGIC;
+    signal Result        : STD_LOGIC_VECTOR(3 DOWNTO 0);
 
-    component Shift_Register_Left
+    component Left_Shift is
         Generic (
             size : integer := 4
         );
         Port (
-            clk         : in  std_logic;
-            reset       : in  std_logic;
-            shift       : in  std_logic;
-            A           : in  std_logic_vector(size-1 downto 0);
-            Result      : out std_logic_vector(size-1 downto 0);
-            Zero_flag    : out std_logic;
-            Carry_flag   : out std_logic;
-            Borrow_flag  : out std_logic;
-            Overflow_flag : out std_logic;
-            Greater_flag  : out std_logic;
-            Equal_flag    : out std_logic
+            A             : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
+            Shift         : IN  STD_LOGIC;
+            Zero_flag     : OUT std_logic;
+            Carry_flag    : OUT std_logic;
+            Borrow_flag   : OUT std_logic;
+            Overflow_flag : OUT std_logic;
+            Greater_flag  : OUT std_logic;
+            Equal_flag    : OUT std_logic;
+            Result        : OUT  STD_LOGIC_VECTOR (size-1 DOWNTO 0)
         );
     end component;
 
 begin
-    uut: Shift_Register_Left
+
+    uut: Left_Shift
         port map (
-            clk => clk,
-            reset => reset,
-            shift => shift,
             A => A,
-            Result => Result,
+            Shift => Shift,
             Zero_flag => Zero_flag,
             Carry_flag => Carry_flag,
             Borrow_flag => Borrow_flag,
             Overflow_flag => Overflow_flag,
             Greater_flag => Greater_flag,
-            Equal_flag => Equal_flag
+            Equal_flag => Equal_flag,
+            Result => Result
         );
 
-    clk_process : process
+    process
     begin
-        while true loop
-            clk <= '0';
-            wait for 10 ns;
-            clk <= '1';
-            wait for 10 ns;
-        end loop;
-    end process;
 
+        A <= "0011";
+        Shift <= '1';
+        wait for 10 ns;  
 
-    stim_proc: process
-    begin
-        reset <= '1';
-        wait for 20 ns;
-        reset <= '0';
-        
-        A <= "1101";
-        wait for 20 ns;
+        A <= "1001";
+        Shift <= '1';
+        wait for 10 ns;
 
-        shift <= '1';
-        wait for 20 ns;
+        A <= "0110";
+        Shift <= '0';
 
-        shift <= '0';
-        wait for 20 ns;
+        A <= "1111";
+        Shift <= '1';
 
-        A <= "1010";
-        wait for 20 ns;
-
-        shift <= '1';
-        wait for 20 ns;
-
-        shift <= '0';
-        wait for 20 ns;
-
-        A <= "0001";
-        wait for 20 ns;
-
-        shift <= '1';
-        wait for 20 ns;
+        A <= "0000";
+        Shift <= '1';
 
         wait;
     end process;
