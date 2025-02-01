@@ -2,15 +2,15 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-entity Generic_Control_Unit is
+ENTITY Generic_Control_Unit is
     Generic (
         size : integer := 4
     );
     Port (
         Opcode        : IN  STD_LOGIC_VECTOR (3 DOWNTO 0);
+        CLK           : IN STD_LOGIC;
         A             : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
         B             : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
-        CLK           : IN  STD_LOGIC;
         reset         : IN  STD_LOGIC;
         shift         : IN  STD_LOGIC;
         rotate        : IN  STD_LOGIC;
@@ -22,7 +22,7 @@ entity Generic_Control_Unit is
         Equal_flag    : out std_logic;
         result : OUT  STD_LOGIC_VECTOR (size-1 DOWNTO 0)
     );
-end Generic_Control_Unit;
+END Generic_Control_Unit;
 
 architecture Behavioral of Generic_Control_Unit is
 
@@ -99,8 +99,6 @@ architecture Behavioral of Generic_Control_Unit is
             size : integer := size
         );
         Port (
-            CLK            : IN  STD_LOGIC;
-            Reset          : IN  STD_LOGIC;
             Rotate         : IN  STD_LOGIC;
             A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
             Result         : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
@@ -118,8 +116,6 @@ architecture Behavioral of Generic_Control_Unit is
             size : integer := size
         );
         Port (
-            CLK            : IN  STD_LOGIC;
-            Reset          : IN  STD_LOGIC;
             Rotate         : IN  STD_LOGIC;
             A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
             Result         : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
@@ -149,13 +145,11 @@ architecture Behavioral of Generic_Control_Unit is
         );
     end COMPONENT;
 
-    COMPONENT Right_Shift_Register is
+    COMPONENT Right_Shift is
         Generic (
             size : integer := size
         );
         Port (
-            CLK            : IN  STD_LOGIC;
-            Reset          : IN  STD_LOGIC;
             Shift          : IN  STD_LOGIC;
             A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
             Result         : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
@@ -173,8 +167,6 @@ architecture Behavioral of Generic_Control_Unit is
             size : integer := size
         );
         Port (
-            CLK            : IN  STD_LOGIC;
-            Reset          : IN  STD_LOGIC;
             Shift          : IN  STD_LOGIC;
             A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
             Result         : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
@@ -339,8 +331,6 @@ begin
     u7: Left_Rotate
         generic map (size => size)
         port map (
-            CLK => CLK,
-            Reset => reset,
             Rotate => rotate,
             A => A,
             Result => Lrotate_res ,
@@ -355,8 +345,6 @@ begin
     u8: Right_Rotate
         generic map (size => size)
         port map (
-            CLK => CLK,
-            Reset => reset,
             Rotate => rotate,
             A => A,
             Result => Rrotate_res,
@@ -383,11 +371,9 @@ begin
     );
         
 
-    u10: Right_Shift_Register
+    u10: Right_Shift
         generic map (size => size)
         port map (
-            CLK => CLK,
-            Reset => reset,
             Shift => shift,
             A => A,
             Result => rshift_res,
@@ -402,8 +388,6 @@ begin
     u11: Arithmetic_Right_Shift
         generic map (size => size)
         port map (
-            CLK => CLK,
-            Reset => reset,
             Shift => shift,
             A => A,
             Result => signshift_res,
@@ -431,7 +415,7 @@ begin
             Result => equal
         );
 
-        process(CLK, reset)
+        process(reset)
         begin
             if reset = '1' then
                 zero <= '1';
@@ -455,20 +439,20 @@ begin
                         result <= not_res ;  -- NOT
                     when "0110" =>
                         result <= xor_res ;  -- XOR
-                    -- when "0111" =>
-                    --     result <= Lrotate_res ;  -- Rotate left
-                    -- when "1000" =>
-                    --     result <= Rrotate_res ;  -- Rotate right
+                    when "0111" =>
+                        result <= Lrotate_res ;  -- Rotate left
+                    when "1000" =>
+                        result <= Rrotate_res ;  -- Rotate right
                     when "1001" =>
                         result <= lshift_res ;  -- Logical left shift
-                    -- when "1010" =>
-                    --     result <= rshift_res ;  -- Logical right shift
-                    -- when "1011" =>
-                    --     result <= signshift_res ;  -- Arithmetic right shift
-                    -- when "1100" =>
-                    --     result <= (others => '0'); -- comparison A > B
-                    -- when "1101" =>
-                    --     result <= (others => '0');  -- equality check
+                    when "1010" =>
+                        result <= rshift_res ;  -- Logical right shift
+                    when "1011" =>
+                        result <= signshift_res ;  -- Arithmetic right shift
+                    when "1100" =>
+                        result <= (others => '0'); -- comparison A > B
+                    when "1101" =>
+                        result <= (others => '0');  -- equality check
                     when others =>
                         result <= (others => '0');  -- Default case
                 end case;
