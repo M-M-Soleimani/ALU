@@ -99,17 +99,15 @@ architecture Behavioral of Generic_Control_Unit is
             size : integer := size
         );
         Port (
-            CLK            : IN  STD_LOGIC;
-            Reset          : IN  STD_LOGIC;
-            Rotate         : IN  STD_LOGIC;
-            A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
-            Result         : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
-            Zero_flag      : OUT STD_LOGIC;
-            Carry_flag     : OUT STD_LOGIC;
-            Borrow_flag    : OUT STD_LOGIC;
-            Overflow_flag  : OUT STD_LOGIC;
-            Greater_flag   : OUT STD_LOGIC;
-            Equal_flag     : OUT STD_LOGIC
+            Rotate : IN STD_LOGIC ; 
+            A : IN STD_LOGIC_VECTOR ( size - 1 DOWNTO 0 );
+            Result : OUT STD_LOGIC_VECTOR ( size - 1 DOWNTO 0 );
+            Zero_flag : OUT STD_LOGIC ;
+            Carry_flag : OUT STD_LOGIC ;
+            Borrow_flag : OUT STD_LOGIC ;
+            Overflow_flag : OUT STD_LOGIC ;
+            Greater_flag : OUT STD_LOGIC ;
+            Equal_flag : OUT STD_LOGIC 
         );
     end COMPONENT;
 
@@ -118,21 +116,19 @@ architecture Behavioral of Generic_Control_Unit is
             size : integer := size
         );
         Port (
-            CLK            : IN  STD_LOGIC;
-            Reset          : IN  STD_LOGIC;
-            Rotate         : IN  STD_LOGIC;
-            A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
-            Result         : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
-            Zero_flag      : OUT STD_LOGIC;
-            Carry_flag     : OUT STD_LOGIC;
-            Borrow_flag    : OUT STD_LOGIC;
-            Overflow_flag  : OUT STD_LOGIC;
-            Greater_flag   : OUT STD_LOGIC;
-            Equal_flag     : OUT STD_LOGIC
+            Rotate : IN STD_LOGIC ; 
+            A : IN STD_LOGIC_VECTOR ( size - 1 DOWNTO 0 );
+            Result : OUT STD_LOGIC_VECTOR ( size - 1 DOWNTO 0 );
+            Zero_flag : OUT STD_LOGIC ;
+            Carry_flag : OUT STD_LOGIC ;
+            Borrow_flag : OUT STD_LOGIC ;
+            Overflow_flag : OUT STD_LOGIC ;
+            Greater_flag : OUT STD_LOGIC ;
+            Equal_flag : OUT STD_LOGIC
         );
     end COMPONENT;
 
-    COMPONENT Left_Shift
+    COMPONENT Shift_Register_Left
         Generic (
             size : integer := size
         );
@@ -154,17 +150,15 @@ architecture Behavioral of Generic_Control_Unit is
             size : integer := size
         );
         Port (
-            CLK            : IN  STD_LOGIC;
-            Reset          : IN  STD_LOGIC;
-            Shift          : IN  STD_LOGIC;
-            A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
-            Result         : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
-            Zero_flag      : OUT STD_LOGIC;
-            Carry_flag     : OUT STD_LOGIC;
-            Borrow_flag    : OUT STD_LOGIC;
-            Overflow_flag  : OUT STD_LOGIC;
-            Greater_flag   : OUT STD_LOGIC;
-            Equal_flag     : OUT STD_LOGIC
+            A             : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
+            Shift         : IN  STD_LOGIC;  
+            Zero_flag     : OUT std_logic;
+            Carry_flag    : OUT std_logic;
+            Borrow_flag   : OUT std_logic; 
+            Overflow_flag : OUT std_logic;
+            Greater_flag  : OUT std_logic;
+            Equal_flag    : OUT std_logic;
+            Result        : OUT  STD_LOGIC_VECTOR (size-1 DOWNTO 0)
         );
     end COMPONENT;
 
@@ -173,17 +167,15 @@ architecture Behavioral of Generic_Control_Unit is
             size : integer := size
         );
         Port (
-            CLK            : IN  STD_LOGIC;
-            Reset          : IN  STD_LOGIC;
-            Shift          : IN  STD_LOGIC;
-            A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
-            Result         : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
-            Zero_flag      : OUT STD_LOGIC;
-            Carry_flag     : OUT STD_LOGIC;
-            Borrow_flag    : OUT STD_LOGIC;
-            Overflow_flag  : OUT STD_LOGIC;
-            Greater_flag   : OUT STD_LOGIC;
-            Equal_flag     : OUT STD_LOGIC
+            Shift           : IN  STD_LOGIC; 
+            A               : IN  STD_LOGIC_VECTOR (size - 1 DOWNTO 0);
+            Result          : OUT STD_LOGIC_VECTOR (size - 1 DOWNTO 0);
+            Zero_flag       : OUT std_logic;
+            Carry_flag      : OUT std_logic;
+            Borrow_flag     : OUT std_logic;
+            Overflow_flag   : OUT std_logic;
+            Greater_flag    : OUT std_logic;
+            Equal_flag      : OUT std_logic 
         );
     end COMPONENT;
 
@@ -339,8 +331,6 @@ begin
     u7: Left_Rotate
         generic map (size => size)
         port map (
-            CLK => CLK,
-            Reset => reset,
             Rotate => rotate,
             A => A,
             Result => Lrotate_res ,
@@ -355,8 +345,6 @@ begin
     u8: Right_Rotate
         generic map (size => size)
         port map (
-            CLK => CLK,
-            Reset => reset,
             Rotate => rotate,
             A => A,
             Result => Rrotate_res,
@@ -368,26 +356,24 @@ begin
             Equal_flag => equal
         );
 
-    u9: Left_Shift
+    u9: Shift_Register_Left
     generic map (size => size)
     port map (
         A => A,
         Shift => shift,
         Zero_flag => zero,
+        Result => lshift_res,
         Carry_flag => carry,
         Borrow_flag => borrow,
         Overflow_flag => overflow,
         Greater_flag => greater,
-        Equal_flag => equal,
-        Result => lshift_res
+        Equal_flag => equal
     );
         
 
     u10: Right_Shift_Register
         generic map (size => size)
         port map (
-            CLK => CLK,
-            Reset => reset,
             Shift => shift,
             A => A,
             Result => rshift_res,
@@ -402,8 +388,6 @@ begin
     u11: Arithmetic_Right_Shift
         generic map (size => size)
         port map (
-            CLK => CLK,
-            Reset => reset,
             Shift => shift,
             A => A,
             Result => signshift_res,
@@ -455,20 +439,20 @@ begin
                         result <= not_res ;  -- NOT
                     when "0110" =>
                         result <= xor_res ;  -- XOR
-                    -- when "0111" =>
-                    --     result <= Lrotate_res ;  -- Rotate left
-                    -- when "1000" =>
-                    --     result <= Rrotate_res ;  -- Rotate right
+                    when "0111" =>
+                        result <= Lrotate_res ;  -- Rotate left
+                    when "1000" =>
+                        result <= Rrotate_res ;  -- Rotate right
                     when "1001" =>
                         result <= lshift_res ;  -- Logical left shift
-                    -- when "1010" =>
-                    --     result <= rshift_res ;  -- Logical right shift
-                    -- when "1011" =>
-                    --     result <= signshift_res ;  -- Arithmetic right shift
-                    -- when "1100" =>
-                    --     result <= (others => '0'); -- comparison A > B
-                    -- when "1101" =>
-                    --     result <= (others => '0');  -- equality check
+                    when "1010" =>
+                        result <= rshift_res ;  -- Logical right shift
+                    when "1011" =>
+                        result <= signshift_res ;  -- Arithmetic right shift
+                    when "1100" =>
+                        result <= (others => '0'); -- comparison A > B
+                    when "1101" =>
+                        result <= (others => '0');  -- equality check
                     when others =>
                         result <= (others => '0');  -- Default case
                 end case;
