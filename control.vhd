@@ -132,7 +132,7 @@ architecture Behavioral of Generic_Control_Unit is
         );
     end COMPONENT;
 
-    COMPONENT Shift_Register_Left
+    COMPONENT Left_Shift
         Generic (
             size : integer := size
         );
@@ -368,7 +368,7 @@ begin
             Equal_flag => equal
         );
 
-    u9: Shift_Register_Left
+    u9: Left_Shift
     generic map (size => size)
     port map (
         A => A,
