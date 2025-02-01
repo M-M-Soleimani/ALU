@@ -1,70 +1,63 @@
-LIBRARY IEEE ;
-USE IEEE.STD_LOGIC_1164.ALL ;
-USE IEEE.NUMERIC_STD.ALL ;
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
-ENTITY Right_Shift_Register IS 
-    GENERIC ( size : INTEGER := 4 );
-    PORT (
-        CLK : IN STD_LOGIC ;
-        Reset : IN STD_LOGIC ;
-        Shift : IN STD_LOGIC ; 
-        A : IN STD_LOGIC_VECTOR ( size - 1 DOWNTO 0 );
-        Result : OUT STD_LOGIC_VECTOR ( size - 1 DOWNTO 0 );
-        Zero_flag : OUT STD_LOGIC ;
-        Carry_flag : OUT STD_LOGIC ;
-        Borrow_flag : OUT STD_LOGIC ;
-        Overflow_flag : OUT STD_LOGIC ;
-        Greater_flag : OUT STD_LOGIC ;
-        Equal_flag : OUT STD_LOGIC 
+entity Right_Shift is
+    Generic (
+        size : integer := 4
     );
-END Right_Shift_Register ;
+    Port (
+        A             : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
+        Shift         : IN  STD_LOGIC;  
+        Zero_flag     : OUT std_logic;
+        Carry_flag    : OUT std_logic;
+        Borrow_flag   : OUT std_logic; 
+        Overflow_flag : OUT std_logic;
+        Greater_flag  : OUT std_logic;
+        Equal_flag    : OUT std_logic;
+        Result        : OUT  STD_LOGIC_VECTOR (size-1 DOWNTO 0)
+    );
+end Right_Shift;
 
-ARCHITECTURE Behavior OF Right_Shift_Register IS 
-    SIGNAL Reg : STD_LOGIC_VECTOR ( size - 1 DOWNTO 0 );
-BEGIN 
-    PROCESS ( CLK , Reset )
-    BEGIN
-        if ( Reset = '1' ) then 
-            Reg <= ( OTHERS => '0' );
-        elsif rising_edge (CLK) then
-            if Shift = '1' then 
-                Reg <= "0" & Reg ( size - 1 DOWNTO 1 );
-            else
-                Reg <= A ;
-            end if ;
-        end if ;
-    END PROCESS ;
-        
-    Result <= Reg ;
+architecture Behavioral of Right_Shift is
+    SIGNAL temp_result : STD_LOGIC_VECTOR (size - 1 DOWNTO 0);
+begin
 
-    PROCESS ( Reg , A )
-    BEGIN 
+    process(A, Shift)
+    begin 
+        if Shift = '1' then 
+            temp_result <= '0' & A(size-1 DOWNTO 1);  
+        else
+            temp_result <= A;  
+        end if;    
+    end process;
 
+    Result <= temp_result;
+
+    process(temp_result, A)
+    begin 
         Zero_flag <= '1';
-        for i in 0 to size-1 loop
-            if Reg(i) = '1' then
+        for i in 0 to size - 1 loop
+            if temp_result(i) = '1' then
                 Zero_flag <= '0';
-            end if ;
-        end loop ;
-       
-        Carry_flag <= Reg(0) ;
+            end if;
+        end loop;
+
+        Carry_flag <= A(0);      
         Borrow_flag <= '0'; 
         Overflow_flag <= '0'; 
         
-        if unsigned(Reg) > unsigned(A) then
+        if signed(temp_result) > signed(A) then
             Greater_flag <= '1';
         else
             Greater_flag <= '0';
-        end if ;
+        end if;
 
-        if unsigned(Reg) = unsigned(A) then
+        if signed(temp_result) = signed(A) then
             Equal_flag <= '1';
         else
             Equal_flag <= '0';
-        end if ;
-    END PROCESS ;
+        end if;
+    end process;
 
-END Behavior ;
-
-
-
+end Behavioral;

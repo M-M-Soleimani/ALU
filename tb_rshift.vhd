@@ -1,109 +1,75 @@
-library IEEE ;
-use IEEE.STD_LOGIC_1164.ALL ;
-USE IEEE.NUMERIC_STD.ALL ;
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
-ENTITY tb_Right_Shift_Register IS
-END tb_Right_Shift_Register ;
+entity Right_Shift_tb is
+end Right_Shift_tb;
 
-ARCHITECTURE Behavior of tb_Right_Shift_Register IS
-
-    SIGNAL CLK : STD_LOGIC := '0';
-    SIGNAL Reset : STD_LOGIC := '0';
-    SIGNAL Shift : STD_LOGIC := '0';             
-    SIGNAL A : STD_LOGIC_VECTOR (3 downto 0) := ( OTHERS => '0' ); 
-    SIGNAL Result : STD_LOGIC_VECTOR (3 downto 0); 
-    SIGNAL Zero_flag : STD_LOGIC ;
-    SIGNAL Carry_flag : STD_LOGIC ;
-    SIGNAL Borrow_flag : STD_LOGIC ;
-    SIGNAL Overflow_flag : STD_LOGIC ;
-    SIGNAL Greater_flag : STD_LOGIC ;
-    SIGNAL Equal_flag : STD_LOGIC ;
-
-    COMPONENT Right_Shift_Register
-        GENERIC ( size : INTEGER := 4 );
-        PORT (
-            CLK : IN STD_LOGIC ;
-            Reset : IN STD_LOGIC ;
-            Shift : IN STD_LOGIC ;             
-            A : IN STD_LOGIC_VECTOR ( size - 1 DOWNTO 0 );
-            Result : OUT STD_LOGIC_VECTOR ( size - 1 DOWNTO 0 );
-            Zero_flag : OUT STD_LOGIC ;
-            Carry_flag : OUT STD_LOGIC ;
-            Borrow_flag : OUT STD_LOGIC ;
-            Overflow_flag : OUT STD_LOGIC ;
-            Greater_flag : OUT STD_LOGIC ;
-            Equal_flag : OUT STD_LOGIC 
+architecture Behavioral of Right_Shift_tb is
+    component Right_Shift
+        Generic (
+            size : integer := 4
         );
-    END COMPONENT ;
+        Port (
+            A             : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
+            Shift         : IN  STD_LOGIC;  
+            Zero_flag     : OUT std_logic;
+            Carry_flag    : OUT std_logic;
+            Borrow_flag   : OUT std_logic; 
+            Overflow_flag : OUT std_logic;
+            Greater_flag  : OUT std_logic;
+            Equal_flag    : OUT std_logic;
+            Result        : OUT  STD_LOGIC_VECTOR (size-1 DOWNTO 0)
+        );
+    end component;
 
-BEGIN 
+    signal A             : STD_LOGIC_VECTOR (3 DOWNTO 0):= (others => '0');
+    signal Shift         : STD_LOGIC:= '0';  
+    signal Zero_flag     : std_logic:= '0';
+    signal Carry_flag    : std_logic:= '0';
+    signal Borrow_flag   : std_logic:= '0'; 
+    signal Overflow_flag : std_logic:= '0';
+    signal Greater_flag  : std_logic:= '0';
+    signal Equal_flag    : std_logic:= '0';
+    signal Result        : STD_LOGIC_VECTOR (3 DOWNTO 0):= (others => '0');
 
-    UUT : Right_Shift_Register
-        GENERIC MAP ( size => 4 )
-        PORT MAP (
-            CLK => CLK ,
-            Reset => Reset ,
+begin
+    uut: Right_Shift
+        port map (
+            A => A,
             Shift => Shift,
-            A => A ,
-            Result => Result ,
-            Zero_flag => Zero_flag ,
-            Carry_flag => Carry_flag ,
-            Borrow_flag => Borrow_flag ,
-            Overflow_flag => Overflow_flag ,
-            Greater_flag => Greater_flag ,
-            Equal_flag => Equal_flag
+            Zero_flag => Zero_flag,
+            Carry_flag => Carry_flag,
+            Borrow_flag => Borrow_flag,
+            Overflow_flag => Overflow_flag,
+            Greater_flag => Greater_flag,
+            Equal_flag => Equal_flag,
+            Result => Result
         );
 
-    clk_process : PROCESS
-    BEGIN 
-        while true loop
-            CLK <= '0';
-            WAIT FOR 10 ns ;
-            CLK <= '1';
-            WAIT FOR 10 ns ;
-        end loop ;
-    END PROCESS ;
-
-    stim_proc : PROCESS
-    BEGIN 
-
-        Reset <= '1';
-        WAIT FOR 20 ns ;
-        Reset <= '0';
-
-        A <= "1011" ;
-        WAIT FOR 20 ns ;
-
+    process
+    begin
+        A <= "1101"; 
         Shift <= '1';
-        WAIT FOR 20 ns ;
+        wait for 10 ns;
+
+        A <= "1010"; 
+        Shift <= '1';
+        wait for 10 ns;
+
+        A <= "0001"; 
+        Shift <= '1';
+        wait for 10 ns;
+
+        A <= "1111"; 
         Shift <= '0';
-        WAIT FOR 20 ns ;
-        
-        A <= "0001" ;
-        WAIT FOR 20 ns ;
-        
+        wait for 10 ns;
+
+        A <= "0000"; 
         Shift <= '1';
-        WAIT FOR 20 ns ;
-        Shift <= '0';
-        WAIT FOR 20 ns ;
-        
-        A <= "1010" ;
-        WAIT FOR 20 ns ;
-        
-        Shift <= '1';
-        WAIT FOR 20 ns ;
-        Shift <= '0';
-        WAIT FOR 20 ns ;
+        wait for 10 ns;
 
-        A <= "1111" ;
-        WAIT FOR 20 ns ;
+        wait;
+    end process;
 
-        Shift <= '1';
-        WAIT FOR 20 ns ;
-
-        WAIT ;
-    END PROCESS ;
-
-end Behavior ;
-
-
+end Behavioral;
