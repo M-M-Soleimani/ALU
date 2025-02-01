@@ -37,6 +37,7 @@ architecture Behavioral of tb_Generic_Adder is
 
 begin
     uut: Generic_Adder
+        GENERIC PORT ( size => 4 )
         port map (
             A => A,
             B => B,
