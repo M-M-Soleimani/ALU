@@ -8,7 +8,7 @@ END tb_Left_Rotate ;
 ARCHITECTURE Behavior of tb_Left_Rotate IS 
 
     SIGNAL Rotate : STD_LOGIC := '0';             
-    SIGNAL A : STD_LOGIC_VECTOR (3 downto 0) := ( OTHERS => '0' ); 
+    SIGNAL A : STD_LOGIC_VECTOR (3 downto 0); 
     SIGNAL Result : STD_LOGIC_VECTOR (3 downto 0); 
     SIGNAL Zero_flag : STD_LOGIC ;
     SIGNAL Carry_flag : STD_LOGIC ;
