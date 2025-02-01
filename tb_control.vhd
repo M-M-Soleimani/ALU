@@ -14,6 +14,12 @@ architecture Behavioral of tb_Generic_Control_Unit is
     signal reset  : STD_LOGIC := '0';
     signal shift  : STD_LOGIC := '0';
     signal rotate : STD_LOGIC := '0';
+    signal Zero_flag     : std_logic := '0' ;
+    signal Carry_flag    : std_logic := '0' ;
+    signal Borrow_flag   : std_logic := '0' ;
+    signal Overflow_flag : std_logic := '0' ;
+    signal Greater_flag  : std_logic := '0' ;
+    signal Equal_flag    : std_logic := '0' ;
     signal result : STD_LOGIC_VECTOR(3 DOWNTO 0);
 
     constant CLK_PERIOD : time := 10 ns;
@@ -47,6 +53,7 @@ begin
 
 
     stim_process : process
+    
     begin
         reset <= '1';
         wait for 20 ns;
@@ -56,76 +63,76 @@ begin
         Opcode <= "0001";  -- Addition
         A <= "0011";       
         B <= "0001";       
-        wait for 20 ns;
+        wait for 40 ns;
 
         Opcode <= "0010";  -- Subtraction
         A <= "0011";       
         B <= "0001";       
-        wait for 20 ns;
+        wait for 40 ns;
 
         Opcode <= "0011";  -- AND
         A <= "1100";       
         B <= "1010";       
-        wait for 20 ns;
+        wait for 40 ns;
 
         Opcode <= "0100";  -- OR
         A <= "1100";       
         B <= "1010";       
-        wait for 20 ns;
+        wait for 40 ns;
 
         Opcode <= "0101";  -- NOT
         A <= "1100";       
-        wait for 20 ns;
+        wait for 40 ns;
 
         Opcode <= "0110";  -- XOR
         A <= "1100";       
         B <= "1010";       
-        wait for 20 ns;
+        wait for 40 ns;
 
         Opcode <= "0111";  -- Rotate left
-        A <= "1100";       
+        A <= "1001";       
         rotate <= '1';
-        wait for 20 ns;
+        wait for 40 ns;
         rotate <= '0';
-        wait for 20 ns;
+        wait for 40 ns;
 
         Opcode <= "1000";  -- Rotate right
-        A <= "1100";       
+        A <= "1001";       
         rotate <= '1';
-        wait for 20 ns;
+        wait for 40 ns;
         rotate <= '0';
-        wait for 20 ns;
+        wait for 40 ns;
 
         Opcode <= "1001";  -- Logical left shift
-        A <= "0001";       
+        A <= "1100";       
         shift <= '1';
-        wait for 20 ns;
+        wait for 40 ns;
         shift <= '0';
-        wait for 20 ns;
+        wait for 40 ns;
 
         Opcode <= "1010";  -- Logical right shift
-        A <= "0010";       
+        A <= "0011";       
         shift <= '1';
-        wait for 20 ns;
+        wait for 40 ns;
         shift <= '0';
-        wait for 20 ns;
+        wait for 40 ns;
 
         Opcode <= "1011";  -- Arithmetic right shift
         A <= "1100";       
         shift <= '1';
-        wait for 20 ns;
+        wait for 40 ns;
         shift <= '0';
-        wait for 20 ns;
+        wait for 40 ns;
 
         Opcode <= "1100";  -- comparison A > B
         A <= "1111";       
         B <= "1100";       
-        wait for 20 ns;
+        wait for 40 ns;
 
         Opcode <= "1001";  -- check A equal B
         A <= "1001";       
         B <= "1001";       
-        wait for 20 ns;
+        wait for 40 ns;
 
         wait;  -- Wait indefinitely to end the simulation
     end process;

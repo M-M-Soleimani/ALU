@@ -51,13 +51,13 @@ BEGIN
         Borrow_flag <= '0'; 
         Overflow_flag <= '0'; 
         
-        if unsigned(Reg) > unsigned(A) then
+        if signed(Reg) > signed(A) then
             Greater_flag <= '1';
         else
             Greater_flag <= '0';
         end if ;
 
-        if unsigned(Reg) = unsigned(A) then
+        if signed(Reg) = signed(A) then
             Equal_flag <= '1';
         else
             Equal_flag <= '0';

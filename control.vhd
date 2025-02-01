@@ -561,4 +561,11 @@ begin
         end case;
     end process;
 
+    Zero_flag     <= zero ;
+    Carry_flag    <= carry ;
+    Borrow_flag   <= borrow ;
+    Overflow_flag <= overflow ;
+    Greater_flag  <= greater ;
+    Equal_flag    <= equal ;
+
 end Behavioral;
