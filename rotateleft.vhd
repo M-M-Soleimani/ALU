@@ -21,18 +21,13 @@ ARCHITECTURE Behavioral OF Left_Rotate IS
     SIGNAL Reg : STD_LOGIC_VECTOR ( size - 1 DOWNTO 0 );
 BEGIN 
 
-    PROCESS ( Rotate , A )
+    PROCESS ( Rotate , A , Reg )
     BEGIN  
 
         if ( Rotate = '1' ) then
             Reg <= A(size-2 DOWNTO 0) & A(size-1);  
             Carry_flag <= A(size-1); 
 
-            -- if unsigned(Reg) = unsigned(A) then
-            --     Equal_flag <= '1';
-            -- else
-            --     Equal_flag <= '0';
-            -- end if ;
             if unsigned(A) > unsigned(Reg) then
                 Greater_flag <= '1';
             else
@@ -47,7 +42,6 @@ BEGIN
         else 
             Reg <= A;  
             Carry_flag <= '0';  
-            -- Equal_flag <= '1';
             Greater_flag <= '0';
 
             if (unsigned(A) = 0) then

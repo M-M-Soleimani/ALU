@@ -23,7 +23,7 @@ architecture Behavioral of Left_Shift is
     SIGNAL temp_result : STD_LOGIC_VECTOR (size - 1 DOWNTO 0);
 begin
 
-    process(A, Shift)
+    process(A, Shift , temp_result)
     begin
         if Shift = '1' then
             temp_result <= A(size-2 DOWNTO 0) & '0';  

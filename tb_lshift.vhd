@@ -51,7 +51,7 @@ begin
     process
     begin
 
-        A <= "0011";
+        A <= "0001";
         Shift <= '1';
         wait for 10 ns;  
 
@@ -61,12 +61,15 @@ begin
 
         A <= "0110";
         Shift <= '0';
+        wait for 10 ns;  
 
         A <= "1111";
         Shift <= '1';
-
-        A <= "0000";
+        wait for 10 ns;  
+        
+        A <= "1100";
         Shift <= '1';
+        wait for 10 ns;  
 
         wait;
     end process;
