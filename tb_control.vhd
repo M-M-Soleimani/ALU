@@ -10,8 +10,8 @@ architecture Behavioral of tb_Generic_Control_Unit is
     signal Opcode : STD_LOGIC_VECTOR(3 DOWNTO 0) := ( OTHERS => '0' );
     signal A      : STD_LOGIC_VECTOR(3 DOWNTO 0) := ( OTHERS => '0' );
     signal B      : STD_LOGIC_VECTOR(3 DOWNTO 0) := ( OTHERS => '0' );
-    signal CLK    : STD_LOGIC := '0';
     signal reset  : STD_LOGIC := '0';
+    signal CLK    : STD_LOGIC := '0';
     signal shift  : STD_LOGIC := '0';
     signal rotate : STD_LOGIC := '0';
     signal Zero_flag     : std_logic := '0' ;
@@ -20,7 +20,7 @@ architecture Behavioral of tb_Generic_Control_Unit is
     signal Overflow_flag : std_logic := '0' ;
     signal Greater_flag  : std_logic := '0' ;
     signal Equal_flag    : std_logic := '0' ;
-    signal result : STD_LOGIC_VECTOR(3 DOWNTO 0);
+    signal result : STD_LOGIC_VECTOR(3 DOWNTO 0):= ( OTHERS => '0' );
 
     constant CLK_PERIOD : time := 10 ns;
 
@@ -34,8 +34,8 @@ begin
             Opcode => Opcode,
             A      => A,
             B      => B,
-            CLK    => CLK,
             reset  => reset,
+            CLK    => CLK,
             shift  => shift,
             rotate => rotate,
             result => result

@@ -2,15 +2,15 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-entity Generic_Control_Unit is
+ENTITY Generic_Control_Unit is
     Generic (
         size : integer := 4
     );
     Port (
         Opcode        : IN  STD_LOGIC_VECTOR (3 DOWNTO 0);
+        CLK           : IN STD_LOGIC;
         A             : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
         B             : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
-        CLK           : IN  STD_LOGIC;
         reset         : IN  STD_LOGIC;
         shift         : IN  STD_LOGIC;
         rotate        : IN  STD_LOGIC;
@@ -22,7 +22,7 @@ entity Generic_Control_Unit is
         Equal_flag    : out std_logic;
         result : OUT  STD_LOGIC_VECTOR (size-1 DOWNTO 0)
     );
-end Generic_Control_Unit;
+END Generic_Control_Unit;
 
 architecture Behavioral of Generic_Control_Unit is
 
@@ -99,15 +99,17 @@ architecture Behavioral of Generic_Control_Unit is
             size : integer := size
         );
         Port (
-            Rotate : IN STD_LOGIC ; 
-            A : IN STD_LOGIC_VECTOR ( size - 1 DOWNTO 0 );
-            Result : OUT STD_LOGIC_VECTOR ( size - 1 DOWNTO 0 );
-            Zero_flag : OUT STD_LOGIC ;
-            Carry_flag : OUT STD_LOGIC ;
-            Borrow_flag : OUT STD_LOGIC ;
-            Overflow_flag : OUT STD_LOGIC ;
-            Greater_flag : OUT STD_LOGIC ;
-            Equal_flag : OUT STD_LOGIC 
+            CLK            : IN  STD_LOGIC;
+            Reset          : IN  STD_LOGIC;
+            Rotate         : IN  STD_LOGIC;
+            A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Result         : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Zero_flag      : OUT STD_LOGIC;
+            Carry_flag     : OUT STD_LOGIC;
+            Borrow_flag    : OUT STD_LOGIC;
+            Overflow_flag  : OUT STD_LOGIC;
+            Greater_flag   : OUT STD_LOGIC;
+            Equal_flag     : OUT STD_LOGIC
         );
     end COMPONENT;
 
@@ -116,15 +118,17 @@ architecture Behavioral of Generic_Control_Unit is
             size : integer := size
         );
         Port (
-            Rotate : IN STD_LOGIC ; 
-            A : IN STD_LOGIC_VECTOR ( size - 1 DOWNTO 0 );
-            Result : OUT STD_LOGIC_VECTOR ( size - 1 DOWNTO 0 );
-            Zero_flag : OUT STD_LOGIC ;
-            Carry_flag : OUT STD_LOGIC ;
-            Borrow_flag : OUT STD_LOGIC ;
-            Overflow_flag : OUT STD_LOGIC ;
-            Greater_flag : OUT STD_LOGIC ;
-            Equal_flag : OUT STD_LOGIC
+            CLK            : IN  STD_LOGIC;
+            Reset          : IN  STD_LOGIC;
+            Rotate         : IN  STD_LOGIC;
+            A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Result         : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Zero_flag      : OUT STD_LOGIC;
+            Carry_flag     : OUT STD_LOGIC;
+            Borrow_flag    : OUT STD_LOGIC;
+            Overflow_flag  : OUT STD_LOGIC;
+            Greater_flag   : OUT STD_LOGIC;
+            Equal_flag     : OUT STD_LOGIC
         );
     end COMPONENT;
 
@@ -145,20 +149,22 @@ architecture Behavioral of Generic_Control_Unit is
         );
     end COMPONENT;
 
-    COMPONENT Right_Shift_Register is
+    COMPONENT Right_Shift is
         Generic (
             size : integer := size
         );
         Port (
-            A             : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
-            Shift         : IN  STD_LOGIC;  
-            Zero_flag     : OUT std_logic;
-            Carry_flag    : OUT std_logic;
-            Borrow_flag   : OUT std_logic; 
-            Overflow_flag : OUT std_logic;
-            Greater_flag  : OUT std_logic;
-            Equal_flag    : OUT std_logic;
-            Result        : OUT  STD_LOGIC_VECTOR (size-1 DOWNTO 0)
+            CLK            : IN  STD_LOGIC;
+            Reset          : IN  STD_LOGIC;
+            Shift          : IN  STD_LOGIC;
+            A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Result         : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Zero_flag      : OUT STD_LOGIC;
+            Carry_flag     : OUT STD_LOGIC;
+            Borrow_flag    : OUT STD_LOGIC;
+            Overflow_flag  : OUT STD_LOGIC;
+            Greater_flag   : OUT STD_LOGIC;
+            Equal_flag     : OUT STD_LOGIC
         );
     end COMPONENT;
 
@@ -167,15 +173,17 @@ architecture Behavioral of Generic_Control_Unit is
             size : integer := size
         );
         Port (
-            Shift           : IN  STD_LOGIC; 
-            A               : IN  STD_LOGIC_VECTOR (size - 1 DOWNTO 0);
-            Result          : OUT STD_LOGIC_VECTOR (size - 1 DOWNTO 0);
-            Zero_flag       : OUT std_logic;
-            Carry_flag      : OUT std_logic;
-            Borrow_flag     : OUT std_logic;
-            Overflow_flag   : OUT std_logic;
-            Greater_flag    : OUT std_logic;
-            Equal_flag      : OUT std_logic 
+            CLK            : IN  STD_LOGIC;
+            Reset          : IN  STD_LOGIC;
+            Shift          : IN  STD_LOGIC;
+            A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Result         : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+            Zero_flag      : OUT STD_LOGIC;
+            Carry_flag     : OUT STD_LOGIC;
+            Borrow_flag    : OUT STD_LOGIC;
+            Overflow_flag  : OUT STD_LOGIC;
+            Greater_flag   : OUT STD_LOGIC;
+            Equal_flag     : OUT STD_LOGIC
         );
     end COMPONENT;
 
@@ -371,7 +379,7 @@ begin
     );
         
 
-    u10: Right_Shift_Register
+    u10: Right_Shift
         generic map (size => size)
         port map (
             Shift => shift,
@@ -415,7 +423,7 @@ begin
             Result => equal
         );
 
-        process(CLK, reset)
+        process(reset)
         begin
             if reset = '1' then
                 zero <= '1';
