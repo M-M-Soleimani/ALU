@@ -8,10 +8,10 @@ ENTITY Generic_Control_Unit is
     );
     Port (
         Opcode        : IN  STD_LOGIC_VECTOR (3 DOWNTO 0);
-        CLK           : IN STD_LOGIC;
         A             : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
         B             : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
         reset         : IN  STD_LOGIC;
+        CLK           : IN  STD_LOGIC;
         shift         : IN  STD_LOGIC;
         rotate        : IN  STD_LOGIC;
         Zero_flag     : out std_logic;
@@ -99,8 +99,6 @@ architecture Behavioral of Generic_Control_Unit is
             size : integer := size
         );
         Port (
-            CLK            : IN  STD_LOGIC;
-            Reset          : IN  STD_LOGIC;
             Rotate         : IN  STD_LOGIC;
             A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
             Result         : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
@@ -118,8 +116,6 @@ architecture Behavioral of Generic_Control_Unit is
             size : integer := size
         );
         Port (
-            CLK            : IN  STD_LOGIC;
-            Reset          : IN  STD_LOGIC;
             Rotate         : IN  STD_LOGIC;
             A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
             Result         : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
@@ -132,7 +128,7 @@ architecture Behavioral of Generic_Control_Unit is
         );
     end COMPONENT;
 
-    COMPONENT Shift_Register_Left
+    COMPONENT Left_Shift
         Generic (
             size : integer := size
         );
@@ -154,8 +150,6 @@ architecture Behavioral of Generic_Control_Unit is
             size : integer := size
         );
         Port (
-            CLK            : IN  STD_LOGIC;
-            Reset          : IN  STD_LOGIC;
             Shift          : IN  STD_LOGIC;
             A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
             Result         : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
@@ -173,8 +167,6 @@ architecture Behavioral of Generic_Control_Unit is
             size : integer := size
         );
         Port (
-            CLK            : IN  STD_LOGIC;
-            Reset          : IN  STD_LOGIC;
             Shift          : IN  STD_LOGIC;
             A              : IN  STD_LOGIC_VECTOR(size-1 DOWNTO 0);
             Result         : OUT STD_LOGIC_VECTOR(size-1 DOWNTO 0);
@@ -364,7 +356,7 @@ begin
             Equal_flag => equal
         );
 
-    u9: Shift_Register_Left
+    u9: Left_Shift
     generic map (size => size)
     port map (
         A => A,
