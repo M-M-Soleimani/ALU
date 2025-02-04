@@ -134,14 +134,14 @@ architecture Behavioral of Generic_Control_Unit is
         );
         Port (
             A             : IN  STD_LOGIC_VECTOR (size-1 DOWNTO 0);
-            Shift         : IN  STD_LOGIC;  
-            Zero_flag     : OUT std_logic;
-            Carry_flag    : OUT std_logic;
-            Borrow_flag   : OUT std_logic; 
-            Overflow_flag : OUT std_logic;
-            Greater_flag  : OUT std_logic;
-            Equal_flag    : OUT std_logic;
-            Result        : OUT  STD_LOGIC_VECTOR (size-1 DOWNTO 0)
+            Shift         : IN  STD_LOGIC ;  
+            Zero_flag     : OUT STD_LOGIC ;
+            Carry_flag    : OUT STD_LOGIC ;
+            Borrow_flag   : OUT STD_LOGIC ; 
+            Overflow_flag : OUT STD_LOGIC ;
+            Greater_flag  : OUT STD_LOGIC ;
+            Equal_flag    : OUT STD_LOGIC ;
+            Result        : OUT STD_LOGIC_VECTOR (size-1 DOWNTO 0)
         );
     end COMPONENT;
 
@@ -237,7 +237,7 @@ architecture Behavioral of Generic_Control_Unit is
     end component;
 
     SIGNAL add_res , sub_res , and_res , not_res , or_res , xor_res ,
-           rshift_res , lshift_res , signshift_res , Rrotate_res , Lrotate_res : STD_LOGIC_VECTOR(size-1 DOWNTO 0);
+           rshift_res , lshift_res , signshift_res , Rrotate_res , Lrotate_res : STD_LOGIC_VECTOR(size-1 DOWNTO 0) := (OTHERS => '0');
     SIGNAL carry, borrow, overflow, greater, equal, zero : STD_LOGIC;
 
 begin
@@ -415,7 +415,7 @@ begin
             Result => equal
         );
 
-        process(reset)
+        process(reset , Opcode , A , B , CLK)
         begin
             if reset = '1' then
                 zero <= '1';
