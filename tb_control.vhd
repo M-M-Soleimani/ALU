@@ -38,7 +38,13 @@ begin
             CLK    => CLK,
             shift  => shift,
             rotate => rotate,
-            result => result
+            result => result,
+            Zero_flag => Zero_flag,
+            Carry_flag => Carry_flag,
+            Borrow_flag => Borrow_flag,
+            Overflow_flag => Overflow_flag,
+            Greater_flag => Greater_flag,
+            Equal_flag => Equal_flag
         );
 
     clk_process : process
